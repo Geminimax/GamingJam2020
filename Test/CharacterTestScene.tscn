@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
+
+[node name="CharacterTestScene" type="Node2D"]
+
+[node name="TowerCharacterController" parent="." instance=ExtResource( 2 )]
+position = Vector2( 520, 208 )
+
+[node name="MainCharacterController" parent="." instance=ExtResource( 1 )]
+position = Vector2( 208, 160 )
+move_speed = 140.0
+accel_lerp_weight = 10.0
