@@ -4,8 +4,8 @@ var holdable_character_in_range = null setget set_holdable_character_in_range;
 var holded_character = null
 var drop_distance = 60
 var cast_distance = 60
-onready var drop_cast : RayCast2D = $PhysicCharacterBody/DropSpotRaycast
-onready var character_cast : RayCast2D = $PhysicCharacterBody/CharacterRaycast
+export (int,LAYERS_2D_PHYSICS) var character_pickup_layer
+export (int,LAYERS_2D_PHYSICS) var character_drop_layer
 onready var hold_position = $PhysicCharacterBody/HoldPosition
 
 
@@ -18,12 +18,14 @@ func _process(delta):
 		holded_character.global_position = hold_position.global_position
 		if Input.is_action_just_pressed("drop_tower"):
 			var drop_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
-			if check_cast(drop_position,drop_cast):
-				drop_character()
+			var collider = check_cast(drop_position,character_drop_layer)
+			if collider:
+				drop_character(collider)
 	else:		
 		var cast_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
-		if(check_cast(cast_position,character_cast)):
-			var collect_area = character_cast.get_collider()
+		var collider = check_cast(cast_position,character_pickup_layer)
+		if collider:
+			var collect_area = collider
 			set_holdable_character_in_range(collect_area.controller)
 		else:
 			set_holdable_character_in_range(null)
@@ -33,10 +35,11 @@ func _process(delta):
 				pick_character()
 				
 
-func check_cast(cast_position,raycast):
-	raycast.cast_to = cast_position -  body.global_position 
-	raycast.force_raycast_update()
-	return raycast.is_colliding()
+func check_cast(cast_position,layer):
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_point(cast_position,1,[],layer,true,true)
+	if(result):
+		return result[0].collider
 
 func set_holdable_character_in_range(new):
 	var previous = holdable_character_in_range
@@ -54,9 +57,8 @@ func pick_character():
 	holded_character.pickup()
 	set_holdable_character_in_range(null)
 	
-func drop_character():
-	var drop_spot = drop_cast.get_collider()
-	if(drop_spot and drop_spot.available):
+func drop_character(drop_spot):
+	if(drop_spot.available):
 		holded_character.drop(drop_spot)
 		set_holdable_character_in_range(holded_character)
 		holded_character = null

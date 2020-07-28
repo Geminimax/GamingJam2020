@@ -19,6 +19,7 @@ func pickup():
 	$PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",true)
 
 func drop(spot):
+	$PhysicCharacterBody/AnimationPlayer.play("Squish")
 	global_position = spot.global_position
 	spot.occupy_spot()
 	positioned_spot = spot
