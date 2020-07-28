@@ -1,25 +1,26 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sprites/AllyPlaceholder.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 40.2666
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="MainCharacterController" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+character_pickup_layer = 2
+character_drop_layer = 4
 
-[node name="CollectionRange" type="Area2D" parent="PhysicCharacterBody" index="1"]
-scale = Vector2( 0.993378, 1 )
-collision_layer = 0
-collision_mask = 2
+[node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
+frames = SubResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicCharacterBody/CollectionRange" index="0"]
-shape = SubResource( 1 )
+[node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]
+position = Vector2( 0, -24 )
 
-[node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="2"]
-position = Vector2( 0, -48 )
-
-[node name="DropPosition" type="Position2D" parent="PhysicCharacterBody" index="3"]
-position = Vector2( 0, 56 )
-[connection signal="area_entered" from="PhysicCharacterBody/CollectionRange" to="." method="_on_CollectionRange_area_entered"]
+[editable path="PhysicCharacterBody"]
