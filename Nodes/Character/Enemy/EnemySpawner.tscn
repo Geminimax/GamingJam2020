@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Character/Enemy/RareEnemy.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
-Enemy = ExtResource( 2 )
+GenericEnemy = ExtResource( 2 )
+RareEnemy = ExtResource( 3 )
 
 [node name="WaveCooldown" type="Timer" parent="."]
 wait_time = 3.0
