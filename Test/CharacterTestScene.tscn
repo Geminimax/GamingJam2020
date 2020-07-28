@@ -1,11 +1,49 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Test/CharacterTestScene.gd" type="Script" id=6]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="TileSet" id=2]
+0/name = "icon.png 0"
+0/texture = ExtResource( 5 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/navigation = SubResource( 1 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "icon.png 1"
+1/texture = ExtResource( 5 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 64, 64 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [node name="CharacterTestScene" type="Node2D"]
+script = ExtResource( 6 )
 
 [node name="TowerCharacterController" parent="." instance=ExtResource( 2 )]
 position = Vector2( 456, 264 )
@@ -27,8 +65,13 @@ position = Vector2( 400, 88 )
 [node name="DropSpot3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 544, 232 )
 
-[node name="GenericEnemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 93.5991, 368.246 )
+[node name="Level" type="Navigation2D" parent="."]
 
-[node name="EnemyObjective" type="Position2D" parent="."]
-position = Vector2( 723.177, 448.055 )
+[node name="TileMap" type="TileMap" parent="Level"]
+modulate = Color( 0, 0, 0, 1 )
+z_index = -1
+tile_set = SubResource( 2 )
+format = 1
+tile_data = PoolIntArray( 327680, 0, 0, 327681, 0, 0, 327682, 1, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 1, 0, 393219, 0, 0, 393220, 0, 0, 393221, 1, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 1, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 1, 0, 458764, 0, 0 )
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
