@@ -5,8 +5,8 @@ export (PackedScene) var RareEnemy
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
-var start = Vector2(70, 350)
-var end = Vector2(700, 450)
+export (Vector2) var start = Vector2(70, 350)
+export (Vector2) var end = Vector2(700, 450)
 var path = null
 var reset_path = true
 
@@ -20,7 +20,7 @@ func _process(delta):
     pass
 
 func gen_path(start: Vector2, end: Vector2):
-    var new_path = nav_2d.get_simple_path(start, end)
+    var new_path = nav_2d.get_simple_path(start, end,true)
     path = new_path
 
 # TODO @arsukeey Fazer o start e end (objective) serem recebidos por argumentos aqui
