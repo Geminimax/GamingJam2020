@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "CombatStats",
+"language": "GDScript",
+"path": "res://Nodes/Combat/CombatStats.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "PhysicCharacterBody",
 "language": "GDScript",
 "path": "res://Nodes/Character/PhysicCharacterBody.gd"
 } ]
 _global_script_class_icons={
+"CombatStats": "",
 "PhysicCharacterBody": ""
 }
 
