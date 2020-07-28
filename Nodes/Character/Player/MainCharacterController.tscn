@@ -1,10 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sprites/AllyPlaceholder.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="MainCharacterController" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+
+[node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
+frames = SubResource( 1 )
 
 [node name="DropSpotRaycast" type="RayCast2D" parent="PhysicCharacterBody" index="1"]
 enabled = true
@@ -19,4 +31,6 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="3"]
-position = Vector2( 0, -48 )
+position = Vector2( 0, -24 )
+
+[editable path="PhysicCharacterBody"]

@@ -7,21 +7,21 @@
 [node name="CharacterTestScene" type="Node2D"]
 
 [node name="TowerCharacterController" parent="." instance=ExtResource( 2 )]
-position = Vector2( 520, 208 )
+position = Vector2( 456, 264 )
 
 [node name="TowerCharacterController2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 736, 408 )
+position = Vector2( 288, 256 )
 
 [node name="MainCharacterController" parent="." instance=ExtResource( 1 )]
-position = Vector2( 208, 160 )
+position = Vector2( 72, 64 )
 move_speed = 140.0
 accel_lerp_weight = 10.0
 
 [node name="DropSpot" parent="." instance=ExtResource( 3 )]
-position = Vector2( 672, 288 )
+position = Vector2( 224, 136 )
 
 [node name="DropSpot2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 848, 240 )
+position = Vector2( 400, 88 )
 
 [node name="DropSpot3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 992, 384 )
+position = Vector2( 544, 232 )

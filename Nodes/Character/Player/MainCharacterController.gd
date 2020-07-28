@@ -2,8 +2,8 @@ extends "res://Nodes/Character/BaseCharacterController.gd"
 
 var holdable_character_in_range = null setget set_holdable_character_in_range;
 var holded_character = null
-var drop_distance = 80
-var cast_distance = 80
+var drop_distance = 60
+var cast_distance = 60
 onready var drop_cast : RayCast2D = $PhysicCharacterBody/DropSpotRaycast
 onready var character_cast : RayCast2D = $PhysicCharacterBody/CharacterRaycast
 onready var hold_position = $PhysicCharacterBody/HoldPosition
