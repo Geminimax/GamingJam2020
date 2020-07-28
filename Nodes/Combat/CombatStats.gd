@@ -18,11 +18,13 @@ func take_damage(damage_amount):
         emit_signal("death")
     health = clamp(0,health,max_health)
 
-func add_to_valid_targets(target : CombatStats):
+func add_valid_target(target : CombatStats):
     #If target isn't present:
     if valid_targets.find(target) == -1:
         valid_targets.append(target)
 
-func remove_from_valid_targets(target: CombatStats):
+func remove_valid_target(target: CombatStats):
     valid_targets.erase(target)
       
+func attack(target):
+    pass
