@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Resource/Wave.gd" type="Script" id=1]
+
+[resource]
+resource_name = "Wave"
+script = ExtResource( 1 )
+enemy_count = 0
+enemy_count_progression = 0
+wave_count = 0
