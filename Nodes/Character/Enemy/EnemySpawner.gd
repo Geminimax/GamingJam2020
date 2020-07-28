@@ -3,7 +3,7 @@ extends Node2D
 export (PackedScene) var GenericEnemy
 export (PackedScene) var RareEnemy
 
-export(Array,Resource) wave_configuration
+export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
 var start = Vector2(70, 350)
 var end = Vector2(700, 450)
