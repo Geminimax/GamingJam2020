@@ -3,6 +3,9 @@ enum STATE{INACTIVE,DEFAULT, PICKUP}
 var state = STATE.INACTIVE
 func _ready():
 	$PhysicCharacterBody/CharacterCollectionArea.controller = self
+	
+func pickup_range_entered():
+	pass
 
 func pickup():
 	state = STATE.PICKUP

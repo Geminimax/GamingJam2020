@@ -17,9 +17,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicCharacterBody/CollectionRange" index="0"]
 shape = SubResource( 1 )
 
-[node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="2"]
-position = Vector2( 0, -48 )
+[node name="RayCast2D" type="RayCast2D" parent="PhysicCharacterBody" index="2"]
+enabled = true
+collision_mask = 4
+collide_with_areas = true
 
-[node name="DropPosition" type="Position2D" parent="PhysicCharacterBody" index="3"]
-position = Vector2( 0, 56 )
+[node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="3"]
+position = Vector2( 0, -48 )
 [connection signal="area_entered" from="PhysicCharacterBody/CollectionRange" to="." method="_on_CollectionRange_area_entered"]
