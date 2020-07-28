@@ -4,9 +4,9 @@ signal death
 
 export (int) var max_health
 export (int) var health
-export (int) var attack_range
-export (int) var attack_speed
-export (int) var attack_damage
+export (float) var attack_range
+export (float) var attack_speed
+export (float) var attack_damage
 var valid_targets : Array = []
 
 func deal_damage(target : CombatStats):
@@ -25,5 +25,4 @@ func add_to_valid_targets(target : CombatStats):
 
 func remove_from_valid_targets(target: CombatStats):
     valid_targets.erase(target)
-    
-        
+      
