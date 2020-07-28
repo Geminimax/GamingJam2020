@@ -2,8 +2,6 @@ extends Area2D
 
 var available = true
 
-
-
 func occupy_spot():
     available = false
     visible = false

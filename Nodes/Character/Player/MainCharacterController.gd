@@ -29,7 +29,7 @@ func _process(delta):
             set_holdable_character_in_range(collect_area.controller)
         else:
             set_holdable_character_in_range(null)
-            
+
         if holdable_character_in_range:
             if Input.is_action_just_pressed("pick_tower"):
                 pick_character()
