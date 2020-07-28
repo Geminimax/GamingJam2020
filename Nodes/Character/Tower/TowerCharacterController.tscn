@@ -50,6 +50,8 @@ tracks/1/keys = {
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
+position = Vector2( 0, 3 )
+scale = Vector2( 1, 0.7 )
 frames = SubResource( 1 )
 
 [node name="CharacterCollectionArea" parent="PhysicCharacterBody" index="1" instance=ExtResource( 3 )]

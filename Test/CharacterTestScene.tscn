@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=4]
 
 [node name="CharacterTestScene" type="Node2D"]
 
@@ -25,3 +26,9 @@ position = Vector2( 400, 88 )
 
 [node name="DropSpot3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 544, 232 )
+
+[node name="GenericEnemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 93.5991, 368.246 )
+
+[node name="EnemyObjective" type="Position2D" parent="."]
+position = Vector2( 723.177, 448.055 )

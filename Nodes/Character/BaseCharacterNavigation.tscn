@@ -1,9 +1,20 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Nodes/Character/BaseCharacterNavigation.gd" type="Script" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+var character: Sprite
+onready var nav2d: Navigation2D = $Navigation2D
+onready var line2d: Line2D = $Line2D
+
+func gen_path(objective: Vector2):
+    var new_path = nav2d.get_simple_path(character.global_position, objective)
+    line2d.points = new_path
+    character.path = new_path
+"
 
 [node name="Node" type="Node"]
-script = ExtResource( 1 )
+script = SubResource( 1 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
