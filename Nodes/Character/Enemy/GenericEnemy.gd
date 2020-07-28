@@ -7,7 +7,6 @@ var speed = 110.0
 var path = PoolVector2Array() setget set_path
 
 func _ready():
-    print("ENEMY READY")
     set_process(false)
 
 func _process(delta):
