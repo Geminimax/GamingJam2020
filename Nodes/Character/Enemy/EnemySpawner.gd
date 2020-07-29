@@ -36,7 +36,6 @@ var enemies_count = 0
 var wave = false
 
 func spawn_wave():
-    print(path)
     wave = true
     $EnemyCooldown.start()
 
