@@ -19,7 +19,7 @@ func _process(delta):
     pass
 
 func gen_path(start: Vector2, end: Vector2):
-    var new_path = nav_2d.get_simple_path(start, end,true)
+    var new_path = nav_2d.get_simple_path(start, end, true)
     path = new_path
 
 # TODO @arsukeey Fazer o start e end (objective) serem recebidos por argumentos aqui
@@ -31,28 +31,32 @@ func setnav_2d(value: Navigation2D):
         is_ready = true
 
 const ENEMIES_PER_WAVE = 3
+const WAVE_TIME = 2.0
 
 var enemies_count = 0
 var wave = false
+var wave_count = -1
+
+var current_enemy = null
+var enemy_quantity = 0
+var enemy_count_next_wave = 0
 
 func spawn_wave():
+    wave_count += 1
+    $WaveCooldown.wait_time = 1.0 + enemy_count_next_wave * 0.5
     wave = true
-    $EnemyCooldown.start()
+    print($WaveCooldown.wait_time)
+    for wave in wave_configuration:
+        for enemy in wave.enemy_configuration:
+            current_enemy = enemy.enemy_type
+            enemy_quantity = enemy.enemy_count + wave_count * enemy.enemy_count_progression
+            enemy_count_next_wave = float(enemy.enemy_count + (wave_count + 1) * enemy.enemy_count_progression)
+            for i in range(enemy_quantity):
+                spawn_enemy(current_enemy)
+                yield(get_tree().create_timer(0.5), "timeout")
 
-func _on_EnemyCooldown_timeout():
-    enemies_count += 1
-    if enemies_count >= ENEMIES_PER_WAVE:
-        enemies_count = 0
-        wave = false
-        $EnemyCooldown.stop()
-    spawn_enemy()
-
-func spawn_enemy():
-    var enemy
-    if randf() <= 0.4:
-        enemy = RareEnemy.instance()
-    else:
-        enemy = GenericEnemy.instance()
+func spawn_enemy(type: PackedScene):
+    var enemy = type.instance()
     add_child(enemy)
     enemy.position = start
     enemy.set_path(path)
