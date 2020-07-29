@@ -27,4 +27,3 @@ func level_up():
         max_health += max_health_increment
         health = health_percent * max_health
         attack_damage += attack_damage_increment
-
