@@ -21,7 +21,7 @@ func _process(delta):
             var collider = check_cast(drop_position,character_drop_layer)
             if collider:
                 drop_character(collider)
-    else:		
+    else:
         var cast_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
         var collider = check_cast(cast_position,character_pickup_layer)
         if collider:

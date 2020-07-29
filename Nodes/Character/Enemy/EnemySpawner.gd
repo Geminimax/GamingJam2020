@@ -14,7 +14,6 @@ var is_ready = false
 
 func _ready():
     set_process(false)
-    print("enemy spawner ready")
 
 func _process(delta):
     pass
@@ -38,13 +37,11 @@ var wave = false
 
 func spawn_wave():
     print(path)
-    print("spawning wave")
     wave = true
     $EnemyCooldown.start()
 
 func _on_EnemyCooldown_timeout():
     enemies_count += 1
-    print("timeout enemy cooldown")
     if enemies_count >= ENEMIES_PER_WAVE:
         enemies_count = 0
         wave = false

@@ -4,6 +4,7 @@ signal death
 const BASE_ATTACK_TIME = 1.0
 export (int) var max_health
 export (int) var health
+export (float) var speed
 export (float) var attack_range
 export (float) var attack_speed = 1.0
 export (float) var attack_damage
