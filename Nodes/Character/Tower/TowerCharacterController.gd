@@ -1,12 +1,14 @@
 extends "res://Nodes/Character/BaseCharacterController.gd"
 enum STATE{INACTIVE,DEFAULT, PICKUP}
+const ATTACK_RANGE_MULTI = 10
 var state = STATE.INACTIVE
 var positioned_spot = null
-var attack_range_multi = 50
 onready var combat_stats : CombatStats = $TowerCombatStats
+onready var attack_range_shape : CircleShape2D = $PhysicCharacterBody/AttackRange/CollisionShape2D.shape
 
 func _ready():
     $PhysicCharacterBody/CharacterCollectionArea.controller = self
+    update_stats()
     
 func pickup_range_entered():
     $PhysicCharacterBody/Selector.visible = true
@@ -29,9 +31,14 @@ func drop(spot):
     state = STATE.DEFAULT
 
 func update_stats():
-    pass
+    attack_range_shape.radius = ATTACK_RANGE_MULTI * combat_stats.attack_range
 
 
 func _on_AttackRange_area_entered(area):
     if(area.controller.combat_stats):
         combat_stats.add_valid_target(area.controller.combat_stats)
+
+
+func _on_AttackRange_area_exited(area):
+    if(area.controller.combat_stats):
+        combat_stats.remove_valid_target(area.controller.combat_stats)

@@ -4,10 +4,15 @@ var holdable_character_in_range = null setget set_holdable_character_in_range;
 var holded_character = null
 var drop_distance = 60
 var cast_distance = 60
+var currency_amount = 0
+
 export (int,LAYERS_2D_PHYSICS) var character_pickup_layer
 export (int,LAYERS_2D_PHYSICS) var character_drop_layer
 onready var hold_position = $PhysicCharacterBody/HoldPosition
+onready var upgrade_progress = $UpgradeProgressUI
 
+func _ready():
+    Global.player = self
 
 func _process(delta):
     if body:
@@ -19,11 +24,13 @@ func _process(delta):
         if Input.is_action_just_pressed("drop_tower"):
             var drop_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
             var collider = check_cast(drop_position,character_drop_layer)
+            print(collider)
             if collider:
                 drop_character(collider)
-    else:		
+    else:
         var cast_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
         var collider = check_cast(cast_position,character_pickup_layer)
+        print(collider)
         if collider:
             var collect_area = collider
             set_holdable_character_in_range(collect_area.controller)
@@ -32,7 +39,10 @@ func _process(delta):
 
         if holdable_character_in_range:
             if Input.is_action_just_pressed("pick_tower"):
+               
                 pick_character()
+            elif Input.is_action_just_pressed("upgrade_tower"):
+                var cost = holdable_character_in_range.get_
                 
 
 func check_cast(cast_position,layer):
@@ -83,3 +93,8 @@ func get_horizontal_input():
     elif(Input.is_action_pressed("move_right")):
         input = 1
     return Vector2(input,0)
+
+
+func _on_CurrencyCollectionArea_area_entered(area):
+    currency_amount += 1
+    area.collect_currency()

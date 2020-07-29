@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Resource",
+"class": "A_EnemyConfiguration",
+"language": "GDScript",
+"path": "res://Resource/EnemyConfiguration.gd"
+}, {
+"base": "Resource",
 "class": "A_Wave",
 "language": "GDScript",
 "path": "res://Resource/Wave.gd"
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://Nodes/Character/PhysicCharacterBody.gd"
 } ]
 _global_script_class_icons={
+"A_EnemyConfiguration": "",
 "A_Wave": "",
 "CombatStats": "",
 "PhysicCharacterBody": ""
@@ -35,6 +41,10 @@ _global_script_class_icons={
 config/name="Gaming Jam 2020"
 run/main_scene="res://Test/CharacterTestScene.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Nodes/Global/Global.tscn"
 
 [display]
 
@@ -103,6 +113,11 @@ pick_tower={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"unicode":0,"echo":false,"script":null)
  ]
 }
+upgrade_tower={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -111,6 +126,7 @@ pick_tower={
 2d_physics/layer_3="BlocksDrop"
 2d_physics/layer_4="EnemyCombat"
 2d_physics/layer_5="AllyCombat"
+2d_physics/layer_6="Coins"
 
 [rendering]
 

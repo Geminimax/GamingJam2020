@@ -1,10 +1,17 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Resource/Wave.gd" type="Script" id=1]
+[ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/CharacterCollectionArea.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+enemy_type = ExtResource( 3 )
+enemy_count = 1
+enemy_count_progression = 0
 
 [resource]
 resource_name = "Wave"
 script = ExtResource( 1 )
-enemy_count = 0
-enemy_count_progression = 0
-wave_count = 0
+enemy_configuration = [ SubResource( 1 ) ]
+wave_count = 1
