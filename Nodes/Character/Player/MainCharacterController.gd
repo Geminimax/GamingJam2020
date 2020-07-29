@@ -24,13 +24,11 @@ func _process(delta):
         if Input.is_action_just_pressed("drop_tower"):
             var drop_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
             var collider = check_cast(drop_position,character_drop_layer)
-            print(collider)
             if collider:
                 drop_character(collider)
     else:
         var cast_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
         var collider = check_cast(cast_position,character_pickup_layer)
-        print(collider)
         if collider:
             var collect_area = collider
             set_holdable_character_in_range(collect_area.controller)
