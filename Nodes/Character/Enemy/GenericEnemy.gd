@@ -1,13 +1,13 @@
 extends Node2D
 
-var speed = 110.0
 var path = PoolVector2Array() setget set_path
 
 func _ready():
+    $Area2D/CollisionShape2D.shape.radius = $CombatStats.attack_range
     set_process(false)
 
 func _process(delta):
-    var move_dist = speed * delta
+    var move_dist = $CombatStats.speed * delta
     move_along_path(move_dist)
 
 func move_along_path(distance: float):
