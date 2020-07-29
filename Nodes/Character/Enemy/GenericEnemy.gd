@@ -1,10 +1,12 @@
 extends Node2D
 
 var path = PoolVector2Array() setget set_path
-
+onready var combat_stats = $CombatStats
 func _ready():
-    $Area2D/CollisionShape2D.shape.radius = $CombatStats.attack_range
+    $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
     set_process(false)
+    $SpriteHealthBar.combat_stats = combat_stats
+    $DetectionArea.controller = self
 
 func _process(delta):
     var move_dist = $CombatStats.speed * delta
@@ -33,3 +35,12 @@ func set_path(value: PoolVector2Array):
     if value.size() == 0:
         return
     set_process(true)
+
+
+func _on_CombatStats_death():
+    queue_free()
+
+
+func _on_CombatStats_health_changed():
+    $CPUParticles2D.restart()
+    $AnimationPlayer.play("TakeDamage")
