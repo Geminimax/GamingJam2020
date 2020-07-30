@@ -32,7 +32,7 @@ func _process(delta):
         global_position += resulting.normalized() * flock_distancing_speed * delta
         
 func move_along_path(distance: float):
-    var start_point = position
+    var start_point = global_position
     for i in range(path.size()):
         var distance_to_next = start_point.distance_to(path[0])
         if distance <= distance_to_next and distance >= 0.0:

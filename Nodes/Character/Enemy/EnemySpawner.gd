@@ -2,7 +2,7 @@ extends Node2D
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
-onready var start = position
+onready var start = global_position
 var end
 var path = null
 var reset_path = true
@@ -10,7 +10,7 @@ var reset_path = true
 var is_ready = false
 
 func _ready():
-    end = get_parent().get_node("EnemyObjective").position
+    end = get_parent().get_node("EnemyObjective").global_position
     print(start)
     print(end)
     $WaveCooldown.wait_time = FIRST_WAVE_WAIT
@@ -63,6 +63,6 @@ func spawn_wave():
 func spawn_enemy(type: PackedScene):
     var enemy = type.instance()
     add_child(enemy)
-    enemy.position = start
+    enemy.global_position = start
     enemy_spawn_wait = enemy.wait_time
     enemy.set_path(path)

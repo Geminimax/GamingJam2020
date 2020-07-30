@@ -41,7 +41,7 @@ texture = ExtResource( 1 )
 [node name="CombatStats" parent="." instance=ExtResource( 3 )]
 max_health = 10
 health = 10
-speed = 80.0
+speed = 100.0
 attack_range = 20.0
 attack_damage = 1.0
 
