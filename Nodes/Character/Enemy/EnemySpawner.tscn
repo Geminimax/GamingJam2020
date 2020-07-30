@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=2]
@@ -12,15 +12,19 @@ enemy_type = ExtResource( 2 )
 enemy_count = 3
 enemy_count_progression = 0
 
+[sub_resource type="Resource" id=3]
+script = ExtResource( 5 )
+enemy_type = ExtResource( 3 )
+enemy_count = 1
+enemy_count_progression = 1
+
 [sub_resource type="Resource" id=2]
 script = ExtResource( 4 )
-enemy_configuration = [ SubResource( 1 ) ]
+enemy_configuration = [ SubResource( 1 ), SubResource( 3 ) ]
 wave_count = 3
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource( 1 )
-GenericEnemy = ExtResource( 2 )
-RareEnemy = ExtResource( 3 )
 wave_configuration = [ SubResource( 2 ) ]
 
 [node name="WaveCooldown" type="Timer" parent="."]

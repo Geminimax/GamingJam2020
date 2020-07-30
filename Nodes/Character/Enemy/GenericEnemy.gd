@@ -5,7 +5,10 @@ var path = PoolVector2Array() setget set_path
 onready var combat_stats = $CombatStats
 var current_target = null
 var flock_distancing_speed = 20
-export (int,LAYERS_2D_PHYSICS)var enemy_layer = 0
+
+export (int, LAYERS_2D_PHYSICS) var enemy_layer = 0
+export (float) var wait_time = 0.5
+
 func _ready():
     $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
     set_process(false)
