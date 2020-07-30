@@ -2,14 +2,17 @@ extends Node2D
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
-export (Vector2) var start = Vector2(70, 350)
-export (Vector2) var end = Vector2(700, 450)
+onready var start = global_position
+var end
 var path = null
 var reset_path = true
 
 var is_ready = false
 
 func _ready():
+    end = get_parent().get_node("EnemyObjective").global_position
+    print(start)
+    print(end)
     $WaveCooldown.wait_time = FIRST_WAVE_WAIT
     set_process(false)
 
@@ -19,6 +22,7 @@ func _process(delta):
 func gen_path(start: Vector2, end: Vector2):
     var new_path = nav_2d.get_simple_path(start, end, true)
     path = new_path
+    print(path)
 
 # TODO @arsukeey Fazer o start e end (objective) serem recebidos por argumentos aqui
 func setnav_2d(value: Navigation2D):
@@ -44,9 +48,8 @@ var enemy_spawn_wait = 0.5
 func spawn_wave():
     wave_count += 1
     $WaveCooldown.wait_time = WAVE_BASE_TIME + next_wave_wait
-    print($WaveCooldown.wait_time)
     for wave in wave_configuration:
-        if wave_count > wave.wave_count:
+        if wave_count > wave.wave_count and wave.wave_count > 0:
             break
         for enemy in wave.enemy_configuration:
             current_enemy = enemy.enemy_type
@@ -60,6 +63,6 @@ func spawn_wave():
 func spawn_enemy(type: PackedScene):
     var enemy = type.instance()
     add_child(enemy)
-    enemy.position = start
+    enemy.global_position = start
     enemy_spawn_wait = enemy.wait_time
     enemy.set_path(path)
