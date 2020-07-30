@@ -2,7 +2,7 @@ extends Node2D
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
-export (Vector2) var start = global_position
+var start = global_position
 export (Vector2) var end = Vector2(700, 450)
 var path = null
 var reset_path = true
@@ -10,6 +10,7 @@ var reset_path = true
 var is_ready = false
 
 func _ready():
+    print(start)
     $WaveCooldown.wait_time = FIRST_WAVE_WAIT
     set_process(false)
 
