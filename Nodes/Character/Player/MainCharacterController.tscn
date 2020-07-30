@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
@@ -12,6 +12,9 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
 [node name="MainCharacterController" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 character_pickup_layer = 2
@@ -22,5 +25,13 @@ frames = SubResource( 1 )
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]
 position = Vector2( 0, -24 )
+
+[node name="CurrencyCollectionArea" type="Area2D" parent="PhysicCharacterBody" index="2"]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicCharacterBody/CurrencyCollectionArea" index="0"]
+shape = SubResource( 2 )
+[connection signal="area_entered" from="PhysicCharacterBody/CurrencyCollectionArea" to="." method="_on_CurrencyCollectionArea_area_entered"]
 
 [editable path="PhysicCharacterBody"]

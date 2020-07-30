@@ -1,4 +1,4 @@
-extends "res://Nodes/Character/Enemy/GenericEnemy.gd"
+extends "GenericEnemy.gd"
 
 func _ready():
-    $Area2D/CollisionShape2D.shape.radius = $CombatStats.attack_range
+    wait_time = 1.0
