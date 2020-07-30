@@ -1,5 +1,6 @@
 extends Node2D
 
 func _ready():
-	randomize()
-	$EnemySpawner.setnav_2d($Level)
+    randomize()
+    $EnemySpawner1.setnav_2d($Level)
+    $EnemySpawner2.setnav_2d($Level)
