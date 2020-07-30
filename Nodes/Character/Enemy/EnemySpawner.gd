@@ -2,7 +2,7 @@ extends Node2D
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
-export (Vector2) var start = Vector2(70, 350)
+export (Vector2) var start = global_position
 export (Vector2) var end = Vector2(700, 450)
 var path = null
 var reset_path = true
