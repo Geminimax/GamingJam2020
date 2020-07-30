@@ -10,6 +10,7 @@ export (float) var attack_range
 export (float) var attack_speed = 1.0
 export (float) var attack_damage
 var valid_targets : Array = []
+var can_attack = true setget set_can_attack;
 
 func deal_damage(target : CombatStats):
     target.take_damage(attack_damage)
@@ -25,14 +26,16 @@ func take_damage(damage_amount):
 
 func add_valid_target(target : CombatStats):
     #If target isn't present:  
-    if(valid_targets.empty()):
+    if(valid_targets.empty() && can_attack):
         $AttackTimer.start(BASE_ATTACK_TIME/attack_speed)
     if valid_targets.find(target) == -1:
         valid_targets.append(target)
 
 func remove_valid_target(target: CombatStats):
     valid_targets.erase(target)
-      
+
+func has_valid_targets():
+    return !valid_targets.empty()
 func attack():
     deal_damage(valid_targets[0])
 
@@ -40,4 +43,10 @@ func attack():
 func _on_AttackTimer_timeout():
     if(!valid_targets.empty()):
         attack()
+        if(can_attack):
+            $AttackTimer.start(BASE_ATTACK_TIME/attack_speed)
+
+func set_can_attack(value):
+    can_attack = value
+    if has_valid_targets():
         $AttackTimer.start(BASE_ATTACK_TIME/attack_speed)

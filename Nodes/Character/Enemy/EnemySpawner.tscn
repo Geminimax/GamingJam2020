@@ -6,7 +6,6 @@
 [ext_resource path="res://Resource/Wave.gd" type="Script" id=4]
 [ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=5]
 
-<<<<<<< HEAD
 [sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
 enemy_type = ExtResource( 2 )
@@ -18,8 +17,6 @@ script = ExtResource( 4 )
 enemy_configuration = [ SubResource( 1 ) ]
 wave_count = 3
 
-=======
->>>>>>> e1f421bae039453dcc1ff1c58591618656dd8d55
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource( 1 )
 GenericEnemy = ExtResource( 2 )
@@ -27,5 +24,5 @@ RareEnemy = ExtResource( 3 )
 wave_configuration = [ SubResource( 2 ) ]
 
 [node name="WaveCooldown" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 5.0
 [connection signal="timeout" from="WaveCooldown" to="." method="spawn_wave"]

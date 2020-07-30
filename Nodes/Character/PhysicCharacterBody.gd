@@ -5,3 +5,4 @@ var velocity : Vector2 = Vector2()
 
 func _process(delta):
     move_and_slide(velocity)
+    

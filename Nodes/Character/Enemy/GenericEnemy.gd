@@ -1,17 +1,33 @@
 extends Node2D
-
+enum STATE{FOLLOW_PATH, ATTACKING}
+var state = STATE.FOLLOW_PATH
 var path = PoolVector2Array() setget set_path
 onready var combat_stats = $CombatStats
+var current_target = null
+var flock_distancing_speed = 20
+export (int,LAYERS_2D_PHYSICS)var enemy_layer = 0
 func _ready():
     $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
     set_process(false)
-    $SpriteHealthBar.combat_stats = combat_stats
+    $TinySpriteHealthbar.combat_stats = combat_stats
     $DetectionArea.controller = self
 
 func _process(delta):
-    var move_dist = $CombatStats.speed * delta
-    move_along_path(move_dist)
-
+    if(state == STATE.FOLLOW_PATH):
+        var move_dist = $CombatStats.speed * delta
+        move_along_path(move_dist)
+    else: 
+        var direction_to_target = global_position.direction_to(current_target.body.global_position)
+        var close = get_close_enemies()
+        var resulting = Vector2()
+        for i in close:
+            if i.collider.controller.current_target == current_target:
+                var opposite_direction = -global_position.direction_to(i.collider.global_position)
+                resulting =+ opposite_direction
+        if(global_position.distance_to(current_target.body.global_position) > combat_stats.attack_range):
+            resulting += direction_to_target
+        global_position += resulting.normalized() * flock_distancing_speed * delta
+        
 func move_along_path(distance: float):
     var start_point = position
     for i in range(path.size()):
@@ -27,6 +43,20 @@ func move_along_path(distance: float):
         start_point = path[0]
         path.remove(0)
 
+func get_close_enemies():
+    var space_state = get_world_2d().direct_space_state
+    var shape : CircleShape2D = CircleShape2D.new()
+    shape.radius = 10
+    var physicsShape : Physics2DShapeQueryParameters = Physics2DShapeQueryParameters.new()
+    physicsShape.collision_layer = enemy_layer
+    physicsShape.collide_with_areas = true
+    physicsShape.transform = self.global_transform
+    physicsShape.set_shape(shape)
+    physicsShape.exclude = [$DetectionArea]
+    var result = space_state.intersect_shape(physicsShape,32) 
+   # print(result)
+    return result
+        
 func handle_enemy_reaching_end():
     queue_free()
 
@@ -44,3 +74,22 @@ func _on_CombatStats_death():
 func _on_CombatStats_health_changed():
     $CPUParticles2D.restart()
     $AnimationPlayer.play("TakeDamage")
+
+
+func _on_AttackRadius_area_entered(area):
+    var controller = area.controller
+    if ( controller.current_engaged_enemies >= controller.maximum_engaged_enemies):
+       return
+    controller.current_engaged_enemies += 1
+    if current_target == null:
+        current_target = area.controller
+    combat_stats.add_valid_target(area.controller.combat_stats)
+    state = STATE.ATTACKING
+
+func _on_AttackRadius_area_exited(area):
+    if area.controller ==  current_target:
+        current_target = null
+        area.controller.current_engaged_enemies -= 1
+    combat_stats.remove_valid_target(area.controller.combat_stats)
+    if !combat_stats.has_valid_targets():
+        state = STATE.FOLLOW_PATH
