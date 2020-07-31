@@ -83,17 +83,16 @@ func make_wave_panel(panel: Panel, types, count):
         panel.add_child(lbl)
 
 func enemy_spawning():
-    print(visible_enemies)
     visible_enemies += 1
+    print(visible_enemies)
 
 func visible_enemies_decrease():
-    print(visible_enemies)
     visible_enemies -= 1
+    print(visible_enemies)
     
 func enemy_reached_end():
     base_hp -= 1
     print("base hp - " + str(base_hp))
-    visible_enemies_decrease()
     $HeartBox.update_hearts(base_hp)
         
 static func delete_all_children(node):
