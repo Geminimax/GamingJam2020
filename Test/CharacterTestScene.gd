@@ -26,13 +26,23 @@ func _ready():
 func _process(delta):
     if get_tree().get_nodes_in_group("spawners")[0].wave_count >= WAVES_TO_NEXT_LEVEL and visible_enemies <= 0:
         handle_win()
+    if base_hp <= 0:
+        handle_defeat()
 
 func handle_win():
     $WaveWait.stop()
     $WavesRemaining.visible = false
     var spawners = get_tree().get_nodes_in_group("spawners")
+    $ResultMessage.text = "Victory!"
     for s in spawners:
         s.should_spawn = false
+
+func handle_defeat():
+    $ResultMessage.text = "Defeat"
+    var spawners = get_tree().get_nodes_in_group("spawners")
+    $WaveWait.stop()
+    for s in spawners:
+        s.stop_all_enemies(true)
     
 func spawn_wave_enemyspawners():
     wave_max_time = -1

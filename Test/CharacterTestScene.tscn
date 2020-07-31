@@ -6,7 +6,6 @@
 [ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Tilemap/tilemap.tres" type="TileSet" id=5]
 [ext_resource path="res://Test/CharacterTestScene.gd" type="Script" id=6]
-[ext_resource path="res://Nodes/Currency.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=8]
 [ext_resource path="res://Resource/Wave.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=10]
@@ -22,32 +21,35 @@ enemy_type = ExtResource( 10 )
 enemy_count = 1
 enemy_count_progression = 1
 
-[sub_resource type="Resource" id=5]
+[sub_resource type="Resource" id=2]
 script = ExtResource( 8 )
 enemy_type = ExtResource( 11 )
 enemy_count = 2
 enemy_count_progression = 0
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=3]
 script = ExtResource( 9 )
-enemy_configuration = [ SubResource( 1 ), SubResource( 5 ) ]
+enemy_configuration = [ SubResource( 1 ), SubResource( 2 ) ]
 wave_count = 0
 
-[sub_resource type="Resource" id=3]
+[sub_resource type="Resource" id=4]
 script = ExtResource( 8 )
 enemy_type = ExtResource( 11 )
 enemy_count = 1
 enemy_count_progression = 0
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=5]
 script = ExtResource( 9 )
-enemy_configuration = [ SubResource( 1 ), SubResource( 3 ) ]
+enemy_configuration = [ SubResource( 1 ), SubResource( 4 ) ]
 wave_count = 0
 
-[sub_resource type="Theme" id=7]
+[sub_resource type="Theme" id=6]
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 7
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 14 )
 
 [node name="CharacterTestScene" type="Node2D"]
@@ -110,28 +112,13 @@ tile_data = PoolIntArray( 131118, 1, 0, 131119, 1, 0, 196633, 0, 262160, 196634,
 "spawners",
 ] instance=ExtResource( 4 )]
 position = Vector2( 23.0401, 198.042 )
-wave_configuration = [ SubResource( 2 ) ]
+wave_configuration = [ SubResource( 3 ) ]
 
 [node name="EnemySpawner2" parent="." groups=[
 "spawners",
 ] instance=ExtResource( 4 )]
 position = Vector2( 80, 24 )
-wave_configuration = [ SubResource( 4 ) ]
-
-[node name="Currency" parent="." instance=ExtResource( 7 )]
-position = Vector2( 96, 256 )
-
-[node name="Currency2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 152, 296 )
-
-[node name="Currency3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 176, 232 )
-
-[node name="Currency4" parent="." instance=ExtResource( 7 )]
-position = Vector2( 272, 144 )
-
-[node name="Currency5" parent="." instance=ExtResource( 7 )]
-position = Vector2( 272, 144 )
+wave_configuration = [ SubResource( 5 ) ]
 
 [node name="EnemyObjective" type="Position2D" parent="."]
 position = Vector2( 639, 173 )
@@ -147,7 +134,7 @@ margin_left = 165.175
 margin_top = 0.665993
 margin_right = 205.175
 margin_bottom = 40.666
-theme = SubResource( 7 )
+theme = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -169,7 +156,7 @@ margin_left = 386.919
 margin_top = 4.18549
 margin_right = 535.919
 margin_bottom = 25.1855
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -180,6 +167,16 @@ margin_top = 68.688
 margin_right = 633.34
 margin_bottom = 108.688
 custom_constants/separation = 5
-[connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
-[connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
+
+[node name="ResultMessage" type="RichTextLabel" parent="."]
+margin_left = 275.778
+margin_top = 62.9275
+margin_right = 417.778
+margin_bottom = 110.927
+custom_fonts/normal_font = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
+[connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
+[connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
