@@ -9,8 +9,6 @@ func _process(delta):
         if global_position.distance_to(player.body.global_position) < FOLLOW_PLAYER_RADIUS:
             global_position = global_position + global_position.direction_to(player.body.global_position) * approach_speed * delta
             approach_speed += delta * approach_accel
-            
-
 
 func collect_currency():
     queue_free()

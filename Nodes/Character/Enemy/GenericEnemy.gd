@@ -7,7 +7,9 @@ var current_target = null
 var flock_distancing_speed = 20
 
 export (int, LAYERS_2D_PHYSICS) var enemy_layer = 0
+
 export (float) var wait_time = 0.5
+export (float) var wave_interval = 0.3
 
 func _ready():
     $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
