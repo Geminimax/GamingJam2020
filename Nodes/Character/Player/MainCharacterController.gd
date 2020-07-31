@@ -34,12 +34,14 @@ func _process(delta):
         else:
             set_holdable_character_in_range(null)
 
-        if holdable_character_in_range:
-            if Input.is_action_just_pressed("pick_tower"):
-                pick_character()
-            elif Input.is_action_just_pressed("upgrade_tower"):
-                var cost = holdable_character_in_range.combat_stats.get_level_up_price()
-                
+		if holdable_character_in_range:
+			if Input.is_action_just_pressed("pick_tower"):
+				pick_character()
+				
+			elif Input.is_action_just_pressed("upgrade_tower"):
+				var cost = holdable_character_in_range.combat_stats.get_level_up_price()
+				if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
+					currency_amount -= cost
 
 func check_cast(cast_position,layer):
     var space_state = get_world_2d().direct_space_state
