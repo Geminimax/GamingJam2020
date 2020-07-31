@@ -12,17 +12,17 @@ export (float) var attack_speed_increment
 export (float) var attack_damage_increment
 
 func get_level_up_price():
-    return (level_up_price_base + (level_up_price_increment * (level - 1))) * (1 + level_up_price_multi * (level - 1))
+	return (level_up_price_base + (level_up_price_increment * (level - 1))) * (1 + level_up_price_multi * (level - 1))
 
 func level_up():
-    if(level >= MAX_LEVEL):
-        return
-    else:
-        level += 1
-        attack_range += attack_range_increment
-        attack_speed += attack_speed_increment
-        
-        var health_percent = health/max_health
-        max_health += max_health_increment
-        health = health_percent * max_health
-        attack_damage += attack_damage_increment
+	if(level >= MAX_LEVEL):
+		return
+	else:
+		level += 1
+		attack_range += attack_range_increment
+		attack_speed += attack_speed_increment
+		
+		var health_percent = health/max_health
+		max_health += max_health_increment
+		health = health_percent * max_health
+		attack_damage += attack_damage_increment

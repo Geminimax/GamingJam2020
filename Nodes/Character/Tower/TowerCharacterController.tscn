@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
@@ -13,8 +13,9 @@
 [ext_resource path="res://Assets/Sprites/Tower/Towe4.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Sprites/Tower/Towe5.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Sprites/Tower/TowerInactive.png" type="Texture" id=13]
+[ext_resource path="res://Nodes/UI/StatsUpgradeHUD.tscn" type="PackedScene" id=14]
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 10 ) ],
 "loop": true,
@@ -57,7 +58,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, 2.82342 )
 
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="1"]
-frames = SubResource( 6 )
+frames = SubResource( 1 )
 animation = "inactive"
 playing = true
 
@@ -107,8 +108,11 @@ health = 20
 attack_range = 1.0
 attack_speed = 2.0
 attack_damage = 3.0
+
+[node name="StatsUpgradeHUD" parent="." index="2" instance=ExtResource( 14 )]
 [connection signal="area_entered" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_entered"]
 [connection signal="area_exited" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_exited"]
+[connection signal="mouse_entered" from="PhysicCharacterBody/DetectionArea" to="." method="_on_DetectionArea_mouse_entered"]
 [connection signal="health_changed" from="TowerCombatStats" to="." method="_on_TowerCombatStats_health_changed"]
 
 [editable path="PhysicCharacterBody"]
