@@ -7,7 +7,6 @@ var nav_2d: Navigation2D = null setget setnav_2d
 onready var start = global_position
 var end
 var path = null
-var reset_path = true
 
 func _ready():
     end = get_parent().get_node("EnemyObjective").global_position
@@ -38,7 +37,6 @@ var wave_interval = 0.0
 
 func spawn_wave():
     wave_count += 1
-    #get_parent().wait_times.push_back(wave_interval + WAVE_BASE_TIME)
     wave_interval = 0.0
     for wave in wave_configuration:
         if wave_count > wave.wave_count and wave.wave_count > 0:

@@ -98,6 +98,15 @@ position = Vector2( 616, 184 )
 
 [node name="WaveWait" type="Timer" parent="."]
 one_shot = true
+
+[node name="Panel1" type="Panel" parent="."]
+margin_left = 193.0
+margin_top = 7.0
+margin_right = 219.0
+margin_bottom = 46.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
-[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
 [connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
+[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
