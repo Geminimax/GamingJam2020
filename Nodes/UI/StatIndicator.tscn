@@ -1,4 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Sprites/AttackIcon.png" type="Texture" id=2]
+[ext_resource path="res://Nodes/UI/StatIndicator.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.305882, 0.105882, 0.490196, 0.592157 )
@@ -9,11 +22,14 @@ Panel/styles/panel = SubResource( 1 )
 [node name="StatIndicator" type="Control"]
 margin_right = 40.0
 margin_bottom = 20.0
+theme = SubResource( 4 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 2 )
@@ -21,7 +37,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSplit" type="HSplitContainer" parent="."]
+[node name="VSplit" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -29,13 +45,19 @@ __meta__ = {
 }
 
 [node name="Icon" type="TextureRect" parent="VSplit"]
+margin_right = 13.0
 margin_bottom = 20.0
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="VSplit"]
-margin_left = 12.0
-margin_top = 3.0
+margin_left = 17.0
+margin_top = 6.0
 margin_right = 40.0
-margin_bottom = 17.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false

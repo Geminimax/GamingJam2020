@@ -1,48 +1,94 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Nodes/UI/StatIndicator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sprites/AttackIcon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/RangeIcon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/AttackSpeedIcon.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/ShieldIcon.png" type="Texture" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Container
 
 const anchors = [[0.0, 0.5], [0.5, 1.0], [1.0, 0.5], [0.5, 0.0], [0.5, 0.5]]
 var is_open = false
-
+var tween : Tween
+var hide_timer : Timer
+var show_timer : Timer
 func _ready():
-	for child in get_children():
-		child.anchor_left = 0.5
-		child.anchor_top = 0.5
-
+    for child in get_children():
+        child.anchor_left = 0.5
+        child.anchor_top = 0.5
+    tween = $\"../Tween\"
+    hide_timer = $\"../HideTimer\"
+    show_timer = $\"../ShowTimer\"
+    
 func show():
-	visible = true
-	is_open = true
-	for i in get_child_count():
-		$\"../Tween\".interpolate_property(get_children()[i],
-			\"anchor_top\", 0.5, anchors[i][0], 0.3)
-		$\"../Tween\".interpolate_property(get_children()[i],
-			\"anchor_bottom\", 0.5, anchors[i][0], 0.3)
-		$\"../Tween\".interpolate_property(get_children()[i],
-			\"anchor_left\", 0.5, anchors[i][1], 0.3)
-		$\"../Tween\".interpolate_property(get_children()[i],
-			\"anchor_right\", 0.5, anchors[i][1], 0.3)
-	$\"../Tween\".start()
+    if !is_open && show_timer:
+        print(\"started\")
+        is_open = true
+        show_timer.start()
 
-func _on_Container_mouse_exited():
-	is_open = false
-	for child in get_children():
-		$\"../Tween\".interpolate_property(child,
-			\"anchor_top\", child.anchor_top, 0.5, 0.3)
-		$\"../Tween\".interpolate_property(child,
-			\"anchor_bottom\", child.anchor_bottom, 0.5, 0.3)
-		$\"../Tween\".interpolate_property(child,
-			\"anchor_left\", child.anchor_left, 0.5, 0.3)
-		$\"../Tween\".interpolate_property(child,
-			\"anchor_right\", child.anchor_right, 0.5, 0.3)
-	$\"../Tween\".start()
+func show_info():
+    var time = 0.3
+    var trans = Tween.TRANS_CUBIC
+    var ease_mode = Tween.EASE_OUT
+    visible = true
+    is_open = true
+    var children = get_children()
+    for i in get_child_count():
+        tween.interpolate_property(children[i],
+            \"anchor_top\", children[i].anchor_top, anchors[i][0], time,trans,ease_mode)
+        tween.interpolate_property(children[i],
+            \"anchor_bottom\", children[i].anchor_bottom, anchors[i][0], time,trans,ease_mode)
+        tween.interpolate_property(children[i],
+            \"anchor_left\", children[i].anchor_left, anchors[i][1], time,trans,ease_mode)
+        tween.interpolate_property(children[i],
+            \"anchor_right\", children[i].anchor_right, anchors[i][1], time,trans,ease_mode)
+        tween.interpolate_property(children[i],
+            \"modulate:a\", children[i].modulate.a, 1.0, time,trans,ease_mode)
+    tween.start()
+func hide():
+    if(is_open):
+        is_open = false
+        hide_timer.start()
+func hide_info():
+    tween.stop_all()
+    var time = 0.2
+    var trans = Tween.TRANS_CUBIC
+    var ease_mode = Tween.EASE_IN
+    
+    for child in get_children():
+        tween.interpolate_property(child,
+            \"anchor_top\", child.anchor_top, 0.5, time,trans,ease_mode)
+        tween.interpolate_property(child,
+            \"anchor_bottom\", child.anchor_bottom, 0.5, time,trans,ease_mode)
+        tween.interpolate_property(child,
+            \"anchor_left\", child.anchor_left, 0.5, time,trans,ease_mode)
+        tween.interpolate_property(child,
+            \"anchor_right\", child.anchor_right, 0.5, time,trans,ease_mode)
+        tween.interpolate_property(child,
+            \"modulate:a\", child.modulate.a, 0.0, time,trans,ease_mode)
+    tween.start()
+    yield(tween,\"tween_all_completed\")
+    if !is_open:
+        visible = false
 
-func _on_Tween_tween_all_completed():
-	if not is_open:
-		visible = false
+func quick_hide():
+    is_open = false
+    hide_info()
+    
+func quick_show():
+    is_open = true 
+    show_info()
+    
+func _on_HideTimer_timeout():
+    if(!is_open):
+        hide_info()
+
+
+func _on_ShowTimer_timeout():
+    if(is_open):
+        show_info()
 "
 
 [node name="StatsUpgradeHUD" type="Control"]
@@ -64,14 +110,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MaxHP" parent="Container" instance=ExtResource( 1 )]
+[node name="MaximumAttackingEnemies" parent="Container" instance=ExtResource( 1 )]
+margin_right = 20.0
+icon_texture = ExtResource( 5 )
 
 [node name="AttackDamage" parent="Container" instance=ExtResource( 1 )]
+margin_right = 20.0
+icon_texture = ExtResource( 2 )
 
 [node name="AttackSpeed" parent="Container" instance=ExtResource( 1 )]
+margin_right = 20.0
+icon_texture = ExtResource( 4 )
 
 [node name="AttackRange" parent="Container" instance=ExtResource( 1 )]
+margin_right = 20.0
+icon_texture = ExtResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
-[connection signal="mouse_exited" from="Container" to="Container" method="_on_Container_mouse_exited"]
-[connection signal="tween_all_completed" from="Tween" to="Container" method="_on_Tween_tween_all_completed"]
+
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ShowTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+[connection signal="timeout" from="HideTimer" to="Container" method="_on_HideTimer_timeout"]
+[connection signal="timeout" from="ShowTimer" to="Container" method="_on_ShowTimer_timeout"]

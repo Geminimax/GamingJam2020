@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
@@ -32,9 +32,38 @@ animations = [ {
 radius = 64.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 56.0
+radius = 32.0
 
 [sub_resource type="CircleShape2D" id=4]
+
+[sub_resource type="Animation" id=6]
+resource_name = "Squish"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.1, 0.8 ), Vector2( 0.8, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 2 ), Vector2( 0, -1 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.2
@@ -58,7 +87,6 @@ script = ExtResource( 1 )
 position = Vector2( 0, 2.82342 )
 
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="1"]
-scale = Vector2( 1.1, 1.1 )
 frames = SubResource( 1 )
 animation = "inactive"
 playing = true
@@ -88,6 +116,7 @@ position = Vector2( 0, -24 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PhysicCharacterBody" index="6"]
+anims/Squish = SubResource( 6 )
 anims/TakeDamage = SubResource( 5 )
 
 [node name="SpriteHealthBar" parent="PhysicCharacterBody" index="7" instance=ExtResource( 7 )]
@@ -113,7 +142,6 @@ attack_damage = 3.0
 [node name="StatsUpgradeHUD" parent="." index="2" instance=ExtResource( 14 )]
 [connection signal="area_entered" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_entered"]
 [connection signal="area_exited" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_exited"]
-[connection signal="mouse_entered" from="PhysicCharacterBody/DetectionArea" to="." method="_on_DetectionArea_mouse_entered"]
 [connection signal="health_changed" from="TowerCombatStats" to="." method="_on_TowerCombatStats_health_changed"]
 
 [editable path="PhysicCharacterBody"]
