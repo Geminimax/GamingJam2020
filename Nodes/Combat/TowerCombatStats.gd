@@ -16,7 +16,7 @@ func get_level_up_price():
 
 func level_up():
 	if(level >= MAX_LEVEL):
-		return
+		return false
 	else:
 		level += 1
 		attack_range += attack_range_increment
@@ -26,3 +26,4 @@ func level_up():
 		max_health += max_health_increment
 		health = health_percent * max_health
 		attack_damage += attack_damage_increment
+		return true

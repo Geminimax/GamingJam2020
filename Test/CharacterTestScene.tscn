@@ -177,6 +177,6 @@ custom_fonts/normal_font = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
 [connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
+[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
 [connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
