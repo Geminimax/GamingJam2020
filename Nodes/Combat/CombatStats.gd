@@ -20,7 +20,7 @@ func take_damage(damage_amount):
     health -= damage_amount
     if health <= 0:
         emit_signal("death")
-    health = clamp(0,health,max_health)
+    health = clamp(health,0,max_health)
     if health != initial_health:
         emit_signal("health_changed")
 
@@ -38,7 +38,12 @@ func has_valid_targets():
     return !valid_targets.empty()
 func attack():
     deal_damage(valid_targets[0])
-
+func heal_health(amount):
+    var initial_health = health
+    health += amount
+    health = clamp(health,0,max_health)
+    if health != initial_health:
+        emit_signal("health_changed")
 
 func _on_AttackTimer_timeout():
     if(!valid_targets.empty()):

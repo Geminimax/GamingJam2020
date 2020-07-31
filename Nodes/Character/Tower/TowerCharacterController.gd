@@ -35,13 +35,16 @@ func pickup():
 func drop(spot):
     $PhysicCharacterBody/AnimationPlayer.play("Squish")
     global_position = spot.global_position
-    spot.occupy_spot()
+    spot.occupy_spot(self)
     positioned_spot = spot
-    state = STATE.DEFAULT
-    $PhysicCharacterBody/AnimatedSprite.play("default")
-    combat_stats.can_attack = true
-    $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",false)
-    $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",false)
+    if spot.active:
+        state = STATE.DEFAULT
+        $PhysicCharacterBody/AnimatedSprite.play("default")
+        combat_stats.can_attack = true
+        $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",false)
+        $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",false)
+    else:
+        state = STATE.INACTIVE
 
 func update_stats():
     attack_range_shape.radius = ATTACK_RANGE_MULTI * combat_stats.attack_range

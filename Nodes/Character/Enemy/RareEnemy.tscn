@@ -7,4 +7,3 @@ drop_coin_amount = 3.0
 
 [node name="Sprite" parent="." index="0"]
 modulate = Color( 0.0313726, 1, 0, 1 )
-frame = 0

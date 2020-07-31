@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/HealingDropSpot.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/PositioningSpotHealing.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="HealingDropSpot" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+active = false
+
+[node name="AnimatedSprite" parent="." index="0"]
+frames = SubResource( 1 )
+
+[node name="HealingTimer" type="Timer" parent="." index="2"]
+[connection signal="timeout" from="HealingTimer" to="." method="_on_HealingTimer_timeout"]

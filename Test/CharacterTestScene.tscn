@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Nodes/Character/Enemy/RareEnemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tilemap/visual_tileset.tres" type="TileSet" id=12]
+[ext_resource path="res://Nodes/HealingDropSpot.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
@@ -51,6 +52,12 @@ position = Vector2( 264, 248 )
 position = Vector2( 72, 64 )
 move_speed = 140.0
 accel_lerp_weight = 10.0
+
+[node name="HealingDropSpot" parent="." instance=ExtResource( 13 )]
+position = Vector2( 352, 272 )
+
+[node name="HealingDropSpot2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 408, 272 )
 
 [node name="DropSpot" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192, 160 )
@@ -126,6 +133,6 @@ margin_bottom = 46.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
-[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
 [connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
+[connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
+[connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
