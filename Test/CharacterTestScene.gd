@@ -1,16 +1,19 @@
 extends Node2D
 
 var wave_max_time = -1
-var base_hp = 5
+const START_BASE_HP = 5
+var base_hp = START_BASE_HP
 var wave_base_time
 var panels = []
 var font = load("res://Assets/Pixeled.ttf")
+var visible_enemies = 0
 const WAVES_TO_NEXT_LEVEL = 4
 
 func _ready():
     randomize()
     #font.size = 16
     $WaveWait.wait_time = $EnemySpawner1.FIRST_WAVE_WAIT
+    $HeartBox.setup(START_BASE_HP)
     wave_base_time = $EnemySpawner1.WAVE_BASE_TIME
     for spawner in get_tree().get_nodes_in_group("spawners"):
         spawner.setnav_2d($Level)
@@ -20,10 +23,16 @@ func _ready():
         panels.push_back(panel)
     $WaveWait.start()
 
+func _process(delta):
+    if get_tree().get_nodes_in_group("spawners")[0].wave_count >= WAVES_TO_NEXT_LEVEL and visible_enemies <= 0:
+        handle_win()
+
 func handle_win():
+    $WaveWait.stop()
+    $WavesRemaining.visible = false
     var spawners = get_tree().get_nodes_in_group("spawners")
-    for i in spawners:
-        i.stop_all_enemies(true)
+    for s in spawners:
+        s.should_spawn = false
     
 func spawn_wave_enemyspawners():
     wave_max_time = -1
@@ -32,8 +41,8 @@ func spawn_wave_enemyspawners():
     
     if wave_count >= WAVES_TO_NEXT_LEVEL:
         $WaveWait.stop()
-        handle_win()
         return
+
     $WavesRemaining.text = "Waves remaining: " + str(WAVES_TO_NEXT_LEVEL - wave_count)
     for i in spawners.size():
         var types = []
@@ -64,14 +73,28 @@ func make_wave_panel(panel: Panel, types, count):
 
     for i in count.size():
         var lbl = Label.new()
+        var dynfont = DynamicFont.new()
+        dynfont.font_data = load("res://Assets/Pixeled.ttf")
+        dynfont.size = 7
         lbl.text = "x" + str(count[i])
-        lbl.margin_top = 40.0
+        lbl.margin_top = 32.0
         lbl.margin_left = 5 + i * 30
+        lbl.add_font_override("font", dynfont)
         panel.add_child(lbl)
-        lbl.add_font_override("font", font)
 
+func enemy_spawning():
+    print(visible_enemies)
+    visible_enemies += 1
+
+func visible_enemies_decrease():
+    print(visible_enemies)
+    visible_enemies -= 1
+    
 func enemy_reached_end():
     base_hp -= 1
+    print("base hp - " + str(base_hp))
+    visible_enemies_decrease()
+    $HeartBox.update_hearts(base_hp)
         
 static func delete_all_children(node):
     for n in node.get_children():
