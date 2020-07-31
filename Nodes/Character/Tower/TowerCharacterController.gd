@@ -14,6 +14,7 @@ func _ready():
     $PhysicCharacterBody/SpriteHealthBar.combat_stats = combat_stats
     update_stats()
     combat_stats.can_attack = false
+    $PhysicCharacterBody/AnimatedSprite.play("inactive")
     
 func pickup_range_entered():
     $PhysicCharacterBody/Selector.visible = true
@@ -26,6 +27,7 @@ func pickup():
         positioned_spot.empty_spot()
         positioned_spot = null
     state = STATE.PICKUP
+    $PhysicCharacterBody/AnimatedSprite.play("inactive")
     combat_stats.can_attack = false
     $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",true)
     $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",true)
@@ -36,6 +38,7 @@ func drop(spot):
     spot.occupy_spot()
     positioned_spot = spot
     state = STATE.DEFAULT
+    $PhysicCharacterBody/AnimatedSprite.play("default")
     combat_stats.can_attack = true
     $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",false)
     $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",false)

@@ -6,23 +6,23 @@
 [ext_resource path="res://Resource/Wave.gd" type="Script" id=4]
 [ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=5]
 
-[sub_resource type="Resource" id=3]
+[sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
 enemy_type = ExtResource( 2 )
 enemy_count = 2
 enemy_count_progression = 0
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=2]
 script = ExtResource( 5 )
 enemy_type = ExtResource( 3 )
 enemy_count = 1
 enemy_count_progression = 0
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=3]
 script = ExtResource( 4 )
-enemy_configuration = [ SubResource( 3 ), SubResource( 4 ) ]
+enemy_configuration = [ SubResource( 1 ), SubResource( 2 ) ]
 wave_count = 0
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource( 1 )
-wave_configuration = [ SubResource( 2 ) ]
+wave_configuration = [ SubResource( 3 ) ]

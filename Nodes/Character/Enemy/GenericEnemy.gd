@@ -10,6 +10,9 @@ export (int, LAYERS_2D_PHYSICS) var enemy_layer = 0
 
 export (float) var wait_time = 0.5
 export (float) var wave_interval = 0.3
+export (PackedScene) var coin_scene 
+export (float) var coin_velocity_range = 60
+export (float) var drop_coin_amount = 3
 
 func _ready():
     $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
@@ -61,10 +64,16 @@ func get_close_enemies():
     var result = space_state.intersect_shape(physicsShape,32) 
    # print(result)
     return result
-        
+    
 func handle_enemy_reaching_end():
     queue_free()
-
+    
+func spawn_coin():
+    var coin = coin_scene.instance()
+    get_parent().add_child(coin)
+    coin.global_position = global_position
+    coin.velocity = Vector2.RIGHT.rotated(deg2rad(rand_range(0,360))) * rand_range(-coin_velocity_range,coin_velocity_range)
+    
 func set_path(value: PoolVector2Array):
     path = value
     if value.size() == 0:
@@ -73,6 +82,8 @@ func set_path(value: PoolVector2Array):
 
 
 func _on_CombatStats_death():
+    for i in range(drop_coin_amount):
+         spawn_coin()
     queue_free()
 
 

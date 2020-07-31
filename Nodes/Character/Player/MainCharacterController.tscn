@@ -13,7 +13,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 13.3746
 
 [node name="MainCharacterController" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
