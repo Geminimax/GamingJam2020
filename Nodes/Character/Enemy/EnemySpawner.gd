@@ -1,6 +1,6 @@
 extends Node2D
 
-signal next_wave_time(time)
+signal enemy_on_end
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
@@ -49,8 +49,17 @@ func spawn_wave():
                     spawn_enemy(current_enemy)
                     yield(get_tree().create_timer(enemy_spawn_wait), "timeout")
 
+func stop_all_enemies(kill: bool):
+    for enemy in get_tree().get_nodes_in_group("enemies"):
+        if kill:
+            enemy.queue_free()
+        else:
+            enemy.path = []
+
 func spawn_enemy(type: PackedScene):
     var enemy = type.instance()
+    enemy.add_to_group("enemies")
+    enemy.connect("enemy_on_end", get_parent(), "enemy_reached_end")
     add_child(enemy)
     enemy.global_position = start
     enemy_spawn_wait = enemy.wait_time

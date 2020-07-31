@@ -37,7 +37,6 @@ func _process(delta):
 
         if holdable_character_in_range:
             if Input.is_action_just_pressed("pick_tower"):
-               
                 pick_character()
             elif Input.is_action_just_pressed("upgrade_tower"):
                 var cost = holdable_character_in_range.get_

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
@@ -13,16 +13,23 @@
 [ext_resource path="res://Nodes/Character/Enemy/RareEnemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tilemap/visual_tileset.tres" type="TileSet" id=12]
 [ext_resource path="res://Nodes/HealingDropSpot.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Assets/Pixeled.ttf" type="DynamicFontData" id=14]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
 enemy_type = ExtResource( 10 )
 enemy_count = 1
+enemy_count_progression = 1
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 8 )
+enemy_type = ExtResource( 11 )
+enemy_count = 2
 enemy_count_progression = 0
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 9 )
-enemy_configuration = [ SubResource( 1 ) ]
+enemy_configuration = [ SubResource( 1 ), SubResource( 5 ) ]
 wave_count = 0
 
 [sub_resource type="Resource" id=3]
@@ -35,6 +42,12 @@ enemy_count_progression = 0
 script = ExtResource( 9 )
 enemy_configuration = [ SubResource( 1 ), SubResource( 3 ) ]
 wave_count = 0
+
+[sub_resource type="Theme" id=7]
+
+[sub_resource type="DynamicFont" id=6]
+size = 7
+font_data = ExtResource( 14 )
 
 [node name="CharacterTestScene" type="Node2D"]
 script = ExtResource( 6 )
@@ -125,14 +138,37 @@ position = Vector2( 616, 184 )
 [node name="WaveWait" type="Timer" parent="."]
 one_shot = true
 
-[node name="Panel1" type="Panel" parent="."]
-margin_left = 193.0
-margin_top = 7.0
-margin_right = 219.0
-margin_bottom = 46.0
+[node name="Panel2" type="Panel" parent="." groups=[
+"panels",
+]]
+visible = false
+margin_left = 165.175
+margin_top = 0.665993
+margin_right = 205.175
+margin_bottom = 40.666
+theme = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
+
+[node name="Panel1" type="Panel" parent="." groups=[
+"panels",
+]]
+visible = false
+margin_left = 9.7866
+margin_top = 93.2181
+margin_right = 35.7866
+margin_bottom = 147.218
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WavesRemaining" type="Label" parent="."]
+margin_left = 386.919
+margin_top = 4.18549
+margin_right = 535.919
+margin_bottom = 25.1855
+custom_fonts/font = SubResource( 6 )
 [connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]
+[connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
 [connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
