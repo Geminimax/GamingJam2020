@@ -1,6 +1,7 @@
 extends Node2D
 
-signal next_wave_time(time)
+signal enemy_on_end
+signal enemy_spawning
 
 export (Array,Resource) var wave_configuration
 var nav_2d: Navigation2D = null setget setnav_2d
@@ -10,6 +11,7 @@ var path = null
 
 func _ready():
     end = get_parent().get_node("EnemyObjective").global_position
+    connect("enemy_spawning", get_parent(), "enemy_spawning")
 
 func gen_path(start: Vector2, end: Vector2):
     var new_path = nav_2d.get_simple_path(start, end, true)
@@ -34,6 +36,7 @@ var enemy_quantity = 0
 var next_wave_wait = 1.0
 var enemy_spawn_wait = 0.5
 var wave_interval = 0.0
+var should_spawn = true
 
 func spawn_wave():
     wave_count += 1
@@ -46,11 +49,23 @@ func spawn_wave():
             enemy_quantity = enemy.enemy_count + (wave_count - 1) * enemy.enemy_count_progression
             if enemy_quantity > 0:
                 for i in range(enemy_quantity):
-                    spawn_enemy(current_enemy)
-                    yield(get_tree().create_timer(enemy_spawn_wait), "timeout")
+                    if should_spawn:
+                        spawn_enemy(current_enemy)
+                        yield(get_tree().create_timer(enemy_spawn_wait), "timeout")
+
+func stop_all_enemies(kill: bool):
+    for enemy in get_tree().get_nodes_in_group("enemies"):
+        if kill:
+            enemy.queue_free()
+        else:
+            enemy.path = []
 
 func spawn_enemy(type: PackedScene):
+    emit_signal("enemy_spawning")
     var enemy = type.instance()
+    enemy.add_to_group("enemies")
+    enemy.connect("enemy_on_end", get_parent(), "enemy_reached_end")
+    enemy.connect("tree_exited", get_parent(), "visible_enemies_decrease")
     add_child(enemy)
     enemy.global_position = start
     enemy_spawn_wait = enemy.wait_time

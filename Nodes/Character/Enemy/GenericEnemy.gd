@@ -6,6 +6,8 @@ onready var combat_stats = $CombatStats
 var current_target = null
 var flock_distancing_speed = 20
 
+signal enemy_on_end
+
 export (int, LAYERS_2D_PHYSICS) var enemy_layer = 0
 
 export (float) var wait_time = 0.5
@@ -66,6 +68,7 @@ func get_close_enemies():
     return result
     
 func handle_enemy_reaching_end():
+    emit_signal("enemy_on_end")
     queue_free()
     
 func spawn_coin():
