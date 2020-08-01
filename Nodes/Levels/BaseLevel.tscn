@@ -16,7 +16,7 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 14 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
@@ -79,7 +79,7 @@ margin_left = 275.778
 margin_top = 62.9275
 margin_right = 417.778
 margin_bottom = 110.927
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

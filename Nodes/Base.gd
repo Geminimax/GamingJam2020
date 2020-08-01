@@ -6,4 +6,4 @@ onready var maximum_engaged_enemies = 100000
 var body = self
 
 func _ready():
-    $DetectionArea.controller = self
+	$DetectionArea.controller = self
