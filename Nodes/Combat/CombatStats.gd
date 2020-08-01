@@ -55,8 +55,9 @@ func _on_AttackTimer_timeout():
 
 func set_can_attack(value):
     can_attack = value
-    if has_valid_targets():
+    if has_valid_targets() and can_attack:
         $AttackTimer.start(BASE_ATTACK_TIME/attack_speed)
-
+    else:
+        $AttackTimer.stop()
 func knock_back(source_dir):
     controller.knock_back(source_dir)

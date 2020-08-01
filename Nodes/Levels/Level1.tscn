@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Nodes/Levels/BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=2]
@@ -10,20 +10,42 @@
 [ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=8]
 [ext_resource path="res://Resource/Wave.gd" type="Script" id=9]
 [ext_resource path="res://Nodes/Character/Enemy/Minion.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Nodes/Character/Enemy/QuickMinion.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Nodes/Levels/Level2.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 8 )
 enemy_type = ExtResource( 10 )
-enemy_count = 5
-enemy_count_progression = 0
+enemy_count = 3
+enemy_count_progression = 1
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 9 )
 enemy_configuration = [ SubResource( 1 ) ]
-wave_count = 5
+wave_count = 3
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 8 )
+enemy_type = ExtResource( 10 )
+enemy_count = 2
+enemy_count_progression = 1
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 8 )
+enemy_type = ExtResource( 11 )
+enemy_count = 4
+enemy_count_progression = 1
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 9 )
+enemy_configuration = [ SubResource( 3 ), SubResource( 4 ) ]
+wave_count = 3
 
 [node name="Level1" instance=ExtResource( 1 )]
 visible = true
+next_level = ExtResource( 12 )
+base_wave_time = 6.0
+rest_time = 5.0
 
 [node name="TileMap" parent="Level" index="0"]
 visible = true
@@ -39,7 +61,7 @@ tile_data = PoolIntArray( 131080, 7, 0, 131089, 3, 0, 131090, 3, 0, 131163, 1, 0
 "spawners",
 ] instance=ExtResource( 4 )]
 position = Vector2( 24, 0 )
-wave_configuration = [ SubResource( 2 ) ]
+wave_configuration = [ SubResource( 2 ), SubResource( 5 ) ]
 
 [node name="HealingDropSpot2" parent="." index="9" instance=ExtResource( 5 )]
 position = Vector2( 424, 264 )
@@ -60,6 +82,7 @@ position = Vector2( 512, 192 )
 position = Vector2( 320, 176 )
 
 [node name="Panel" parent="." index="15" instance=ExtResource( 7 )]
+visible = false
 
 [node name="TowerCharacterController" parent="." index="16" instance=ExtResource( 3 )]
 position = Vector2( 528, 256 )
@@ -72,5 +95,10 @@ position = Vector2( 216.607, 372.417 )
 
 [node name="Furnace" parent="EnemyObjective" index="0"]
 position = Vector2( -61.7185, -1.19746 )
+frame = 0
+
+[node name="SpriteHealthBar" parent="EnemyObjective/Furnace" index="0"]
+position = Vector2( -18.8885, -35.2195 )
+scale = Vector2( 1, 1 )
 
 [editable path="EnemyObjective"]

@@ -137,6 +137,6 @@ func knock_back(source_dir):
 
 func _on_KnockbackTimer_timeout():
     if combat_stats.has_valid_targets():
-        state =STATE.ATTACKING
+        state = STATE.ATTACKING
     else:
         state = STATE.FOLLOW_PATH

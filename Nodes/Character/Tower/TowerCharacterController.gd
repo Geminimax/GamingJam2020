@@ -42,7 +42,8 @@ func drop(spot):
     global_position = spot.global_position
     spot.occupy_spot(self)
     positioned_spot = spot
-    if spot.active:
+    if spot.active && combat_stats.health > 0:
+        combat_stats.can_attack = true
         draw_radius.activate()
         state = STATE.DEFAULT
         $PhysicCharacterBody/AnimatedSprite.play("default")
@@ -95,3 +96,11 @@ func quick_show_stats():
 
 func max_level_handle():
         stats_upgrade_container.get_node("UpgradeCost").set_modulate(Color(1, 0, 0))
+
+
+func _on_TowerCombatStats_death():
+    state = STATE.INACTIVE
+    $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",true)
+    $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",true)
+    $PhysicCharacterBody/AnimatedSprite.play("inactive")
+    combat_stats.can_attack = false

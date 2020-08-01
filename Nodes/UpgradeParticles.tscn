@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/Sprites/circleDot2.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/Shine.png" type="Texture" id=1]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.410788, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.0366972, 0.513761, 0.990826 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.218955, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="UpgradeParticles" type="CPUParticles2D"]
 emitting = false
@@ -9,8 +16,10 @@ one_shot = true
 randomness = 1.0
 texture = ExtResource( 1 )
 emission_shape = 1
-emission_sphere_radius = 32.0
+emission_sphere_radius = 20.0
 spread = 0.0
 orbit_velocity = 2.0
-linear_accel = -92.47
-color = Color( 0.25098, 0.698039, 0.403922, 1 )
+linear_accel = -30.0
+linear_accel_random = 1.0
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )

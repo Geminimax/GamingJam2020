@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Nodes/Character/Enemy/Minion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestNazi3.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestNazi4.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestNazi1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestAttackNazi.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestNazi2.png" type="Texture" id=6]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+} ]
+
+[node name="QuickMinion" instance=ExtResource( 1 )]
+
+[node name="Sprite" parent="." index="0"]
+frames = SubResource( 1 )
+
+[node name="CombatStats" parent="." index="1"]
+max_health = 8
+health = 8
+speed = 80.0
+attack_range = 10.0
