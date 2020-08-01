@@ -7,6 +7,7 @@ signal level_restart
 signal level_done(next_level)
 export (PackedScene) var next_level
 
+var running = true
 var wave_max_time = -1
 var base_hp
 var wave_base_time = 1
@@ -40,10 +41,13 @@ func _ready():
 
 func _process(delta):
     base_hp = $EnemyObjective/CombatStats.health
-    if get_tree().get_nodes_in_group("spawners")[0].wave_count >= WAVES_TO_NEXT_LEVEL and visible_enemies <= 0:
-        handle_win()
-    if base_hp <= 0:
-        handle_defeat()
+    if running:
+        if get_tree().get_nodes_in_group("spawners")[0].wave_count >= WAVES_TO_NEXT_LEVEL and visible_enemies <= 0:
+            handle_win()
+            running = false
+        if base_hp <= 0:
+            handle_defeat()
+            running = false
 
 func handle_win():
     $WaveWait.stop()
@@ -58,8 +62,9 @@ func handle_win():
 func fireworks():
     for child in $ResultMessage.get_children():
         var particle_instance = fireworks.instance()
-        particle_instance.position = child.position
-        add_child(particle_instance)
+        child.add_child(particle_instance)
+        #particle_instance.position = child.position
+        #add_child(particle_instance)
 
 func handle_defeat():
     $ResultMessage.text = "Defeat"

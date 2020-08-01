@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Nodes/Levels/BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=2]
@@ -6,10 +6,6 @@
 [ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Nodes/HealingDropSpot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=6]
-[ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=7]
-[ext_resource path="res://Resource/Wave.gd" type="Script" id=8]
-[ext_resource path="res://Nodes/Character/Enemy/Tank.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Nodes/Character/Enemy/Minion.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Resource/LevelPanelTheme.tres" type="Theme" id=11]
 
 [sub_resource type="DynamicFont" id=1]
@@ -17,28 +13,6 @@ size = 12
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
-
-[sub_resource type="Resource" id=2]
-script = ExtResource( 7 )
-enemy_type = ExtResource( 10 )
-enemy_count = 1
-enemy_count_progression = 0
-
-[sub_resource type="Resource" id=3]
-script = ExtResource( 7 )
-enemy_type = ExtResource( 9 )
-enemy_count = 1
-enemy_count_progression = 0
-
-[sub_resource type="Resource" id=4]
-script = ExtResource( 8 )
-enemy_configuration = [ SubResource( 2 ), SubResource( 3 ) ]
-wave_count = 0
-
-[sub_resource type="Resource" id=5]
-script = ExtResource( 8 )
-enemy_configuration = [ SubResource( 3 ) ]
-wave_count = 0
 
 [node name="Level1" instance=ExtResource( 1 )]
 
@@ -52,13 +26,11 @@ custom_fonts/font = SubResource( 1 )
 "spawners",
 ] instance=ExtResource( 4 )]
 position = Vector2( 34.7154, 195.798 )
-wave_configuration = [ SubResource( 4 ) ]
 
 [node name="EnemySpawner2" parent="." index="9" groups=[
 "spawners",
 ] instance=ExtResource( 4 )]
 position = Vector2( 85.1172, 25.2069 )
-wave_configuration = [ SubResource( 5 ) ]
 
 [node name="HealingDropSpot" parent="." index="10" instance=ExtResource( 5 )]
 position = Vector2( 368.4, 244.115 )
