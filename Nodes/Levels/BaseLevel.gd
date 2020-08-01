@@ -63,8 +63,6 @@ func fireworks():
     for child in $ResultMessage.get_children():
         var particle_instance = fireworks.instance()
         child.add_child(particle_instance)
-        #particle_instance.position = child.position
-        #add_child(particle_instance)
 
 func handle_defeat():
     $ResultMessage.text = "Defeat"

@@ -85,16 +85,22 @@ __meta__ = {
 }
 
 [node name="Node2D" type="Node2D" parent="ResultMessage"]
-position = Vector2( 184.424, -11.6839 )
+position = Vector2( 202.841, -11.6839 )
 
 [node name="Node2D2" type="Node2D" parent="ResultMessage"]
-position = Vector2( -17.5322, 216.231 )
+position = Vector2( -10.1657, 240.786 )
 
 [node name="Node2D3" type="Node2D" parent="ResultMessage"]
-position = Vector2( -85.2986, 98.405 )
+position = Vector2( -120.323, 36.5023 )
 
 [node name="Node2D4" type="Node2D" parent="ResultMessage"]
-position = Vector2( 105.652, 41.0475 )
+position = Vector2( 183, 206.793 )
+
+[node name="Node2D5" type="Node2D" parent="ResultMessage"]
+position = Vector2( -137.507, 158.379 )
+
+[node name="Node2D6" type="Node2D" parent="ResultMessage"]
+position = Vector2( 27.7009, 67.5903 )
 
 [node name="TowerCharacterControllerAoE" parent="." instance=ExtResource( 7 )]
 position = Vector2( 512, 256 )
