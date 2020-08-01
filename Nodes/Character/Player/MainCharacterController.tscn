@@ -1,15 +1,52 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Sprites/AllyPlaceholder.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle6.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle4.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Player/PlayerIdle5.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk1.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk7.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk3.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk4.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk5.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk6.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk2.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Sprites/Player/PlayerNormalWalk8.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift8.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift6.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift5.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift7.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift4.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift2.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift3.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLift1.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Sprites/Player/PlayerLiftIdle1.png" type="Texture" id=25]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 3 ) ],
 "loop": true,
-"name": "default",
+"name": "idle",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "lift-idle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "walk",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 24 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "lift",
+"speed": 12.0
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -22,9 +59,12 @@ character_drop_layer = 4
 
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
 frames = SubResource( 1 )
+animation = "idle"
+frame = 4
+playing = true
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -19.095 )
 
 [node name="CurrencyCollectionArea" type="Area2D" parent="PhysicCharacterBody" index="2"]
 collision_layer = 0

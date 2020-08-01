@@ -38,8 +38,10 @@ func _process(delta):
             if i.collider.controller.current_target == current_target:
                 var opposite_direction = -global_position.direction_to(i.collider.global_position)
                 resulting =+ opposite_direction
-        if(global_position.distance_to(current_target.body.global_position) > combat_stats.attack_range):
+        if(global_position.distance_to(current_target.body.global_position) > combat_stats.attack_range * 2.0):
             resulting += direction_to_target
+        elif(global_position.distance_to(current_target.body.global_position) < 10):
+            resulting -= direction_to_target
         global_position += resulting.normalized() * flock_distancing_speed * delta
     elif state == STATE.KNOCKBACK:
         global_position += knockback_dir * current_knockback_str * delta

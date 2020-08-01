@@ -16,6 +16,16 @@ func _ready():
 func _process(delta):
     if body:
         var movement_direction = (get_horizontal_input() + get_vertical_input()).normalized()
+        if(movement_direction != Vector2.ZERO):
+            if(holded_character):
+                $PhysicCharacterBody/AnimatedSprite.play("lift")
+            else:
+                $PhysicCharacterBody/AnimatedSprite.play("walk")
+        else:
+            if(holded_character):
+                $PhysicCharacterBody/AnimatedSprite.play("lift-idle")
+            else:
+                $PhysicCharacterBody/AnimatedSprite.play("idle")
         body.velocity = lerp(body.velocity, movement_direction * move_speed, accel_lerp_weight * delta)
         
     if holded_character:
