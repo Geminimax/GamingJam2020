@@ -27,7 +27,7 @@ script = ExtResource( 3 )
 [node name="Furnace" type="AnimatedSprite" parent="."]
 position = Vector2( 56.2813, -1.19746 )
 frames = SubResource( 1 )
-frame = 4
+frame = 2
 playing = true
 
 [node name="CombatStats" parent="." instance=ExtResource( 1 )]
