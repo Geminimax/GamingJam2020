@@ -30,7 +30,12 @@ func _process(delta):
     if(state == STATE.FOLLOW_PATH):
         var move_dist = $CombatStats.speed * delta
         move_along_path(move_dist)
+        $Sprite.play("default")
     elif state == STATE.ATTACKING: 
+        if(!current_target):
+            state = STATE.FOLLOW_PATH
+            return
+        $Sprite.play("attack")
         var direction_to_target = global_position.direction_to(current_target.body.global_position)
         var close = get_close_enemies()
         var resulting = Vector2()

@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Sprites/UIPanel.png" type="Texture" id=2]
+[ext_resource path="res://Nodes/UI/WaveDisplayPanel.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+content_margin_top = 5.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[node name="Panel" type="PanelContainer" groups=[
+"panels",
+]]
+margin_left = 10.0
+margin_top = 115.0
+margin_right = 72.0
+margin_bottom = 168.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 54.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

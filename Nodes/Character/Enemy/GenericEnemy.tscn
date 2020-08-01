@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Sprites/Enemy/EnemyTest3.png" type="Texture" id=1]
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/Sprites/Enemy/EnemyTest1.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Sprites/Enemy/EnemyTest2.png" type="Texture" id=9]
 [ext_resource path="res://Nodes/Currency.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Sprites/Enemy/EnemyTestAttack.png" type="Texture" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -17,6 +18,11 @@ animations = [ {
 "loop": true,
 "name": "default",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -45,20 +51,21 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.655063, 0 ), 0.0, 0.0, 0, 
 [node name="GenericEnemy" type="Node2D"]
 script = ExtResource( 2 )
 enemy_layer = 8
-wait_time = 2.0
-wave_interval = 2.0
+wait_time = 3.0
+wave_interval = 5.0
 coin_scene = ExtResource( 10 )
 drop_coin_amount = 1.0
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.1, 1.1 )
 frames = SubResource( 1 )
+animation = "attack"
 playing = true
 
 [node name="CombatStats" parent="." instance=ExtResource( 3 )]
 max_health = 10
 health = 10
-speed = 40.0
+speed = 60.0
 attack_range = 20.0
 attack_damage = 1.0
 

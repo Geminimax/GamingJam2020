@@ -6,40 +6,34 @@ extends Node2D
 signal level_restart
 signal level_done(next_level)
 export (PackedScene) var next_level
-
+export (PackedScene) var enemy_count_display
 var wave_max_time = -1
 const START_BASE_HP = 5
 var base_hp = START_BASE_HP
 var wave_base_time
 var panels = []
-var font = load("res://Assets/Pixeled.ttf")
 var visible_enemies = 0
-const WAVES_TO_NEXT_LEVEL = 4
-
-onready var dynfont = DynamicFont.new()
-
+var waves_to_next_level = 0
+export (float) var base_wave_time = 9.0
+export (float) var wave_time_progress = 2.0
+export (float) var rest_time = 6.0
+var total_wave_count = 0
 func _ready():
     randomize()
-    dynfont.font_data = preload("res://Assets/Pixeled.ttf")
-    dynfont.size = 7
     #font.size = 16
     
-    #$HeartBox.setup(START_BASE_HP)
-    
+    #$HeartBox.setup(START_BASE_HP
     var spawners = get_tree().get_nodes_in_group("spawners")
-    $WaveWait.wait_time = spawners[0].FIRST_WAVE_WAIT
-    wave_base_time = spawners[0].WAVE_BASE_TIME
     for spawner in spawners:
         spawner.setnav_2d($Level)
-        $WaveWait.connect("timeout", spawner, "spawn_wave")
-
+    waves_to_next_level = spawners[0].get_total_waves()
     for panel in get_tree().get_nodes_in_group("panels"):
         panel.rect_size.y = 54
         panels.push_back(panel)
-    $WaveWait.start()
+    $WaveTimer.start()
 
 func _process(delta):
-    if get_tree().get_nodes_in_group("spawners")[0].wave_count >= WAVES_TO_NEXT_LEVEL and visible_enemies <= 0:
+    if get_tree().get_nodes_in_group("spawners")[0].completed and visible_enemies <= 0:
         handle_win()
     if base_hp <= 0:
         handle_defeat()
@@ -62,51 +56,50 @@ func handle_defeat():
     emit_signal("level_restart")
     
 func spawn_wave_enemyspawners():
-    print("opa")
-    wave_max_time = -1
+    if(total_wave_count >= waves_to_next_level):
+        return
+    var time = base_wave_time + wave_time_progress * total_wave_count
+    total_wave_count += 1
     var spawners = get_tree().get_nodes_in_group("spawners")
     var wave_count = spawners[0].wave_count
     
-    if wave_count >= WAVES_TO_NEXT_LEVEL:
-        $WaveWait.stop()
-        return
-
-    $WavesRemaining.text = "Waves remaining: " + str(WAVES_TO_NEXT_LEVEL - wave_count)
+    $WavesRemaining.text = "Waves remaining: " + str(waves_to_next_level - total_wave_count)
     for i in spawners.size():
-        print("aaaa")
         var types = []
         var count = []
         
         wave_max_time = max(wave_max_time, spawners[i].wave_interval)
         
-        for wave in spawners[i].wave_configuration:
-            for enemy in wave.enemy_configuration:
-                types.push_back(enemy.enemy_type)
-                count.push_back(enemy.enemy_count + (wave_count + 1) * enemy.enemy_count_progression)
+        var wave = spawners[i].wave_configuration[spawners[i].current_wave_configuration]
+        for enemy in wave.enemy_configuration:
+            types.push_back(enemy.enemy_type)
+            count.push_back(enemy.enemy_count + (wave_count) * enemy.enemy_count_progression)
         make_wave_panel(panels[i], types, count)
+        spawners[i].spawn_wave(time)
+    $WaveTimer.start(time)
     
-    $WaveWait.wait_time = wave_max_time + wave_base_time
-    $WaveWait.start()
               
-func make_wave_panel(panel: Panel, types, count):
-    panel.rect_size.x = 30 * types.size()
+func make_wave_panel(panel, types, count):
     panel.visible = true
-    delete_all_children(panel)
+    panel.clear()
     for i in types.size():
+        print(types)
+#
+#        var sprite = Sprite.new()
+#        sprite.texture = texture
+#        sprite.position = Vector2(i * 31 + 10,  12)
         var texture = types[i].instance().get_node("Sprite").frames.get_frame("default", 0)
-        
-        var sprite = Sprite.new()
-        sprite.texture = texture
-        sprite.position = Vector2(i * 31 + 10,  12)
-        panel.add_child(sprite)
+        var display = enemy_count_display.instance()
+        display.texture = texture
+        display.count = count[i]
+        panel.add_enemy_count_display(display)
 
-    for i in count.size():
-        var lbl = Label.new()
-        lbl.text = "x" + str(count[i])
-        lbl.margin_top = 32.0
-        lbl.margin_left = 5 + i * 31
-        lbl.add_font_override("font", dynfont)
-        panel.add_child(lbl)
+#    for i in count.size():
+#        var lbl = Label.new()
+#        lbl.text = "x" + str(count[i])
+#        lbl.margin_top = 32.0
+#        lbl.margin_left = 5 + i * 31
+#        panel.add_child(lbl)
     
 func enemy_spawning():
     visible_enemies += 1
@@ -121,10 +114,14 @@ func enemy_reached_end():
     print("base hp - " + str(base_hp))
     $HeartBox.update_hearts(base_hp)
         
-static func delete_all_children(node):
-    for n in node.get_children():
-        node.remove_child(n)
-        n.queue_free()
 
 func _on_MainCharacterController_player_coins(amount):
     $CoinDisplay/Label.text = str(amount)
+
+
+func _on_RestTimer_timeout():
+    spawn_wave_enemyspawners()
+
+
+func _on_WaveTimer_timeout():
+    $RestTimer.start(rest_time)

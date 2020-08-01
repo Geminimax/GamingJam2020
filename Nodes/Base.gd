@@ -9,4 +9,4 @@ func _ready():
     $DetectionArea.controller = self
 
 func _process(delta):
-    print("curr enemies: " + str(current_engaged_enemies) + " / hp: " + str(combat_stats.health))
+    pass
