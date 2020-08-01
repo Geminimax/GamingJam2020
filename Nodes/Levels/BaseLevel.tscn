@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Levels/BaseLevel.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/PlaceholderCoin.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://Assets/Tilemap/tilemap.tres" type="TileSet" id=5]
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterControllerAoE.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Tilemap/visual_tileset.tres" type="TileSet" id=12]
@@ -9,10 +11,17 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 7
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 14 )
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=3]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource( 2 )
@@ -74,4 +83,29 @@ __meta__ = {
 
 [node name="TowerCharacterControllerAoE" parent="." instance=ExtResource( 7 )]
 position = Vector2( 512, 256 )
+
+[node name="CoinDisplay" type="Node2D" parent="."]
+position = Vector2( 308.186, 1.82616 )
+
+[node name="CoinTexture" type="TextureRect" parent="CoinDisplay"]
+margin_left = -3.55096
+margin_top = 2.71149
+margin_right = 12.449
+margin_bottom = 18.7115
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CoinDisplay"]
+margin_left = 11.0
+margin_top = 3.0
+margin_right = 100.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 3 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="player_coins" from="MainCharacterController" to="." method="_on_MainCharacterController_player_coins"]
 [connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]

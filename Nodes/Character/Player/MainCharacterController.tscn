@@ -33,11 +33,6 @@ animations = [ {
 "name": "idle",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 25 ) ],
-"loop": true,
-"name": "lift-idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 16 ) ],
 "loop": true,
 "name": "walk",
@@ -47,6 +42,11 @@ animations = [ {
 "loop": true,
 "name": "lift",
 "speed": 12.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "lift-idle",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -60,7 +60,7 @@ character_drop_layer = 4
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 4
+frame = 2
 playing = true
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]

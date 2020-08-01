@@ -1,5 +1,7 @@
 extends "res://Nodes/Character/BaseCharacterController.gd"
 
+signal player_coins(amount)
+
 var holdable_character_in_range = null setget set_holdable_character_in_range;
 var holded_character = null
 var drop_distance = 60
@@ -52,6 +54,7 @@ func _process(delta):
                 var cost = holdable_character_in_range.combat_stats.get_level_up_price()
                 if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
                     currency_amount -= cost
+                    update_currency()
 
 func check_cast(cast_position,layer):
     var space_state = get_world_2d().direct_space_state
@@ -110,7 +113,10 @@ func get_horizontal_input():
         input = 1
     return Vector2(input,0)
 
+func update_currency():
+    emit_signal("player_coins", currency_amount)
 
 func _on_CurrencyCollectionArea_area_entered(area):
     currency_amount += 1
     area.collect_currency()
+    update_currency()
