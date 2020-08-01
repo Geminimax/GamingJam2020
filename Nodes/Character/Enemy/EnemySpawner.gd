@@ -64,6 +64,7 @@ func spawn_wave(wave_time):
             completed = true
             return
     current_wave_progress += 1
+    wave_count +=1
     var total_enemy_count = get_total_enemy_count()
     var wave = wave_configuration[current_wave_configuration]
     for enemy in wave.enemy_configuration:

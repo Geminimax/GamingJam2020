@@ -1,0 +1,203 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Nodes/Levels/BaseLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/DropSpot.gd" type="Script" id=2]
+[ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.gd" type="Script" id=6]
+[ext_resource path="res://Resource/Wave.gd" type="Script" id=7]
+[ext_resource path="res://Nodes/UI/WaveDisplayPanel.gd" type="Script" id=8]
+[ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Fonts/PressStart2P.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Assets/Sprites/UIPanel.png" type="Texture" id=12]
+[ext_resource path="res://Nodes/UI/WaveDisplayPanel.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Nodes/Character/Enemy/Minion.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Nodes/Base.tscn" type="PackedScene" id=16]
+
+[sub_resource type="DynamicFont" id=6]
+size = 8
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+content_margin_top = 5.0
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends Node2D
+
+signal enemy_on_end
+signal enemy_spawning
+signal spawn_finished
+export (Array,Resource) var wave_configuration
+var nav_2d: Navigation2D = null setget setnav_2d
+onready var start = global_position
+var end
+var path = null
+
+func _ready():
+    end = get_parent().get_node(\"EnemyObjective\").global_position
+    connect(\"enemy_spawning\", get_parent(), \"enemy_spawning\")
+
+func gen_path(start: Vector2, end: Vector2):
+    var new_path = nav_2d.get_simple_path(start, end, true)
+    path = new_path
+
+# TODO @arsukeey Fazer o start e end (objective) serem recebidos por argumentos aqui
+func setnav_2d(value: Navigation2D):
+    if value != null:
+        nav_2d = value
+        gen_path(start, end)
+
+const ENEMIES_PER_WAVE = 3
+
+const WAVE_BASE_TIME = 0.0
+const FIRST_WAVE_WAIT = 3.0
+
+var enemies_count = 0
+var wave_count = 0
+var completed = false
+var current_enemy = null
+var enemy_quantity = 0
+var next_wave_wait = 1.0
+var enemy_spawn_wait = 0.5
+var wave_interval = 0.0
+var should_spawn = true
+var current_wave_progress = 0
+var current_wave_configuration = 0
+#func spawn_wave():
+#    wave_count += 1
+#    wave_interval = 0.0
+#    for wave in wave_configuration:
+#        if wave_count > wave.wave_count and wave.wave_count > 0:
+#            break
+#        for enemy in wave.enemy_configuration:
+#            current_enemy = enemy.enemy_type
+#            enemy_quantity = enemy.enemy_count + (wave_count - 1) * enemy.enemy_count_progression
+#            if enemy_quantity > 0:
+#                for i in range(enemy_quantity):
+#                    if should_spawn:
+#                        spawn_enemy(current_enemy)
+#                        yield(get_tree().create_timer(enemy_spawn_wait), \"timeout\")
+func spawn_wave(wave_time):
+    if current_wave_configuration >= wave_configuration.size():
+        completed = true
+        return
+    if(current_wave_progress > wave_configuration[current_wave_configuration].wave_count):
+        current_wave_progress = 0
+        current_wave_configuration += 1
+        if current_wave_configuration >= wave_configuration.size():
+            completed = true
+            return
+    current_wave_progress += 1
+    wave_count +=1
+    var total_enemy_count = get_total_enemy_count()
+    var wave = wave_configuration[current_wave_configuration]
+    for enemy in wave.enemy_configuration:
+            current_enemy = enemy.enemy_type
+            enemy_quantity = enemy.enemy_count + (current_wave_progress - 1) * enemy.enemy_count_progression
+            if enemy_quantity > 0:
+                for i in range(enemy_quantity):
+                    if should_spawn:
+                        spawn_enemy(current_enemy)
+                        yield(get_tree().create_timer(wave_time/total_enemy_count), \"timeout\")
+    
+    emit_signal(\"spawn_finished\")
+func stop_all_enemies(kill: bool):
+    for enemy in get_tree().get_nodes_in_group(\"enemies\"):
+        if kill:
+            enemy.queue_free()
+        else:
+            enemy.path = []
+func get_total_enemy_count():
+    var count = 0
+    var wave = wave_configuration[current_wave_configuration]
+    for enemy in wave.enemy_configuration:
+        count += enemy.enemy_count + (current_wave_progress - 1) * enemy.enemy_count_progression
+    return count
+func spawn_enemy(type: PackedScene):
+    emit_signal(\"enemy_spawning\")
+    var enemy = type.instance()
+    enemy.add_to_group(\"enemies\")
+    enemy.connect(\"enemy_on_end\", get_parent(), \"enemy_reached_end\")
+    enemy.connect(\"tree_exited\", get_parent(), \"visible_enemies_decrease\")
+    add_child(enemy)
+    enemy.global_position = start
+    enemy_spawn_wait = enemy.wait_time
+    wave_interval += enemy.wave_interval
+    enemy.set_path(path)
+
+func get_total_waves():
+    var count = 0
+    for wave in wave_configuration:
+        count += wave.wave_count
+    return count
+"
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 9 )
+enemy_type = ExtResource( 15 )
+enemy_count = 3
+enemy_count_progression = 0
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 7 )
+enemy_configuration = [ SubResource( 10 ) ]
+wave_count = 1
+
+[node name="TestLevel" instance=ExtResource( 1 )]
+visible = true
+
+[node name="DropSpot" type="Area2D" parent="." index="9" instance=ExtResource( 3 )]
+position = Vector2( 256, 360 )
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="DropSpot4" type="Area2D" parent="." index="10" instance=ExtResource( 3 )]
+position = Vector2( 200.154, 160.352 )
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="DropSpot5" parent="." index="11" instance=ExtResource( 3 )]
+position = Vector2( 518.951, 173.506 )
+
+[node name="TowerCharacterController" type="Node2D" parent="." index="12" instance=ExtResource( 4 )]
+position = Vector2( 528, 256 )
+script = ExtResource( 6 )
+
+[node name="Panel" type="PanelContainer" parent="." index="13" groups=[
+"panels",
+] instance=ExtResource( 14 )]
+visible = false
+margin_left = 10.0
+margin_top = 115.0
+margin_right = 72.0
+margin_bottom = 168.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemySpawner" type="Node2D" parent="." index="14" groups=[
+"spawners",
+] instance=ExtResource( 5 )]
+position = Vector2( 85.1287, 30.9512 )
+script = SubResource( 9 )
+wave_configuration = [ SubResource( 11 ) ]
+
+[node name="EnemyObjective" parent="." index="15" instance=ExtResource( 16 )]
+position = Vector2( 588.789, 173.473 )
