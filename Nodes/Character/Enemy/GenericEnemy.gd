@@ -103,7 +103,7 @@ func _on_CombatStats_health_changed():
 
 func _on_AttackRadius_area_entered(area):
     var controller = area.controller
-    if ( controller.current_engaged_enemies >= controller.maximum_engaged_enemies):
+    if (controller.current_engaged_enemies >= controller.maximum_engaged_enemies):
        return
     controller.current_engaged_enemies += 1
     if current_target == null:

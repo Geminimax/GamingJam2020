@@ -25,6 +25,7 @@ func take_damage(damage_amount):
     health = clamp(health,0,max_health)
     if health != initial_health:
         emit_signal("health_changed")
+    print("dmg - " + str(damage_amount) + " / health - " + str(health))
 
 func add_valid_target(target : CombatStats):
     #If target isn't present:  
