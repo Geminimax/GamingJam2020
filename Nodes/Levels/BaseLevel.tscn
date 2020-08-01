@@ -80,6 +80,21 @@ margin_top = 62.9275
 margin_right = 417.778
 margin_bottom = 110.927
 custom_fonts/font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" type="Node2D" parent="ResultMessage"]
+position = Vector2( 85.8688, 73.8396 )
+
+[node name="Node2D2" type="Node2D" parent="ResultMessage"]
+position = Vector2( -17.5322, 216.231 )
+
+[node name="Node2D3" type="Node2D" parent="ResultMessage"]
+position = Vector2( -157.79, 183.114 )
+
+[node name="Node2D4" type="Node2D" parent="ResultMessage"]
+position = Vector2( -134.414, 99.3492 )
 
 [node name="TowerCharacterControllerAoE" parent="." instance=ExtResource( 7 )]
 position = Vector2( 512, 256 )
