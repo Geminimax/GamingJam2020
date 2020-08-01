@@ -84,7 +84,7 @@ func make_wave_panel(panel: Panel, types, count):
     for i in count.size():
         var lbl = Label.new()
         var dynfont = DynamicFont.new()
-        dynfont.font_data = load("res://Assets/Pixeled.ttf")
+        dynfont.font_data = preload("res://Assets/Pixeled.ttf")
         dynfont.size = 7
         lbl.text = "x" + str(count[i])
         lbl.margin_top = 32.0

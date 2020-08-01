@@ -36,7 +36,7 @@ radius = 32.0
 
 [sub_resource type="CircleShape2D" id=4]
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "Squish"
 length = 0.5
 step = 0.05
@@ -65,7 +65,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 2 ), Vector2( 0, -1 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:scale")
@@ -116,8 +116,8 @@ position = Vector2( 0, -24 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PhysicCharacterBody" index="6"]
-anims/Squish = SubResource( 6 )
-anims/TakeDamage = SubResource( 5 )
+anims/Squish = SubResource( 5 )
+anims/TakeDamage = SubResource( 6 )
 
 [node name="SpriteHealthBar" parent="PhysicCharacterBody" index="7" instance=ExtResource( 7 )]
 position = Vector2( 0, -24 )
