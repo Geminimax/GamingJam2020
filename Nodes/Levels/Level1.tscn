@@ -96,7 +96,7 @@ position = Vector2( 216.607, 372.417 )
 
 [node name="Furnace" parent="EnemyObjective" index="0"]
 position = Vector2( -61.7185, -1.19746 )
-frame = 0
+frame = 4
 
 [node name="SpriteHealthBar" parent="EnemyObjective/Furnace" index="0"]
 position = Vector2( -18.8885, -35.2195 )
