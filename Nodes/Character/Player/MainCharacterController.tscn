@@ -63,7 +63,7 @@ character_drop_layer = 4
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]
