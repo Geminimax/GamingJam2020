@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Sprites/circleDot2.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.576159, 1 )
+colors = PoolColorArray( 1, 0, 0, 1, 0.992188, 0.916914, 0.116272, 1, 1, 1, 1, 1 )
+
+[node name="VictoryFireworks" type="CPUParticles2D"]
+amount = 16
+explosiveness = 0.5
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 25.0
+color_ramp = SubResource( 1 )

@@ -81,6 +81,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Position2D" type="Position2D" parent="ResultMessage"]
+
+[node name="Position2D2" type="Position2D" parent="ResultMessage"]
+position = Vector2( 140.222, 47.9995 )
+
+[node name="Position2D3" type="Position2D" parent="ResultMessage"]
+position = Vector2( 0, 47.9995 )
+
+[node name="Position2D4" type="Position2D" parent="ResultMessage"]
+position = Vector2( 140.222, 1.0725 )
+
 [node name="TowerCharacterControllerAoE" parent="." instance=ExtResource( 7 )]
 position = Vector2( 512, 256 )
 
