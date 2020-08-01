@@ -39,6 +39,7 @@ func _process(delta):
             var collider = check_cast(drop_position,character_drop_layer)
             if collider:
                 drop_character(collider)
+                $ReleaseChar.play()
     else:
         var cast_position = body.global_position + Vector2.RIGHT.rotated(get_mouse_angle()) * drop_distance 
         var collider = check_cast(cast_position,character_pickup_layer)
@@ -51,15 +52,17 @@ func _process(delta):
         if holdable_character_in_range:
             if Input.is_action_just_pressed("pick_tower"):
                 pick_character()
+                $PickChar.play()
 
-        elif Input.is_action_just_pressed("upgrade_tower"):
-            var cost = holdable_character_in_range.combat_stats.get_level_up_price()
-            if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
-                currency_amount -= cost
-                update_currency()
-                var instance = upgrade_particles.instance()
-                instance.emitting = true
-                holdable_character_in_range.add_child(instance)
+            elif Input.is_action_just_pressed("upgrade_tower"):
+                var cost = holdable_character_in_range.combat_stats.get_level_up_price()
+                if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
+                    currency_amount -= cost
+                    update_currency()
+                    var instance = upgrade_particles.instance()
+                    instance.emitting = true
+                    holdable_character_in_range.add_child(instance)
+                    $Upgrade.play()
 
 func check_cast(cast_position,layer):
     var space_state = get_world_2d().direct_space_state

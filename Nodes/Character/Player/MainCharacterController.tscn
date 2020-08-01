@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
@@ -25,6 +25,9 @@
 [ext_resource path="res://Assets/Sprites/Player/PlayerLift3.png" type="Texture" id=23]
 [ext_resource path="res://Assets/Sprites/Player/PlayerLift1.png" type="Texture" id=24]
 [ext_resource path="res://Assets/Sprites/Player/PlayerLiftIdle1.png" type="Texture" id=25]
+[ext_resource path="res://Assets/SFX/gaming-jam-2020-sfx_pick-char_session.wav" type="AudioStream" id=26]
+[ext_resource path="res://Assets/SFX/gaming-jam-2020-sfx_release-char_session.wav" type="AudioStream" id=27]
+[ext_resource path="res://Assets/SFX/gaming-jam-2020-sfx_select_session.wav" type="AudioStream" id=28]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -60,7 +63,7 @@ character_drop_layer = 4
 [node name="AnimatedSprite" parent="PhysicCharacterBody" index="0"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="HoldPosition" type="Position2D" parent="PhysicCharacterBody" index="1"]
@@ -72,6 +75,15 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicCharacterBody/CurrencyCollectionArea" index="0"]
 shape = SubResource( 2 )
+
+[node name="PickChar" type="AudioStreamPlayer2D" parent="." index="1"]
+stream = ExtResource( 26 )
+
+[node name="ReleaseChar" type="AudioStreamPlayer2D" parent="." index="2"]
+stream = ExtResource( 27 )
+
+[node name="Upgrade" type="AudioStreamPlayer2D" parent="." index="3"]
+stream = ExtResource( 28 )
 [connection signal="area_entered" from="PhysicCharacterBody/CurrencyCollectionArea" to="." method="_on_CurrencyCollectionArea_area_entered"]
 
 [editable path="PhysicCharacterBody"]
