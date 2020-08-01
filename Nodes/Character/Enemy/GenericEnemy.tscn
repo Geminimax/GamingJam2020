@@ -53,6 +53,7 @@ drop_coin_amount = 1.0
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.1, 1.1 )
 frames = SubResource( 1 )
+frame = 2
 playing = true
 
 [node name="CombatStats" parent="." instance=ExtResource( 3 )]
@@ -92,7 +93,12 @@ scale_amount_curve = SubResource( 5 )
 
 [node name="TinySpriteHealthbar" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 16 )
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="death" from="CombatStats" to="." method="_on_CombatStats_death"]
 [connection signal="health_changed" from="CombatStats" to="." method="_on_CombatStats_health_changed"]
 [connection signal="area_entered" from="AttackRadius" to="." method="_on_AttackRadius_area_entered"]
 [connection signal="area_exited" from="AttackRadius" to="." method="_on_AttackRadius_area_exited"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]

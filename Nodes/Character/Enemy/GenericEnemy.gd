@@ -1,5 +1,5 @@
 extends Node2D
-enum STATE{FOLLOW_PATH, ATTACKING}
+enum STATE{FOLLOW_PATH, ATTACKING, KNOCKBACK}
 var state = STATE.FOLLOW_PATH
 var path = PoolVector2Array() setget set_path
 onready var combat_stats = $CombatStats
@@ -15,18 +15,22 @@ export (float) var wave_interval = 0.3
 export (PackedScene) var coin_scene 
 export (float) var coin_velocity_range = 60
 export (float) var drop_coin_amount = 3
+var knockback_dir  = Vector2()
+var knockback_str = 240
+var current_knockback_str = Vector2()
 
 func _ready():
     $AttackRadius/CollisionShape2D.shape.radius = $CombatStats.attack_range
     set_process(false)
     $TinySpriteHealthbar.combat_stats = combat_stats
+    combat_stats.controller = self
     $DetectionArea.controller = self
 
 func _process(delta):
     if(state == STATE.FOLLOW_PATH):
         var move_dist = $CombatStats.speed * delta
         move_along_path(move_dist)
-    else: 
+    elif state == STATE.ATTACKING: 
         var direction_to_target = global_position.direction_to(current_target.body.global_position)
         var close = get_close_enemies()
         var resulting = Vector2()
@@ -37,7 +41,9 @@ func _process(delta):
         if(global_position.distance_to(current_target.body.global_position) > combat_stats.attack_range):
             resulting += direction_to_target
         global_position += resulting.normalized() * flock_distancing_speed * delta
-        
+    elif state == STATE.KNOCKBACK:
+        global_position += knockback_dir * current_knockback_str * delta
+        current_knockback_str = lerp(current_knockback_str,0,delta * 4)
 func move_along_path(distance: float):
     var start_point = global_position
     for i in range(path.size()):
@@ -103,12 +109,27 @@ func _on_AttackRadius_area_entered(area):
     if current_target == null:
         current_target = area.controller
     combat_stats.add_valid_target(area.controller.combat_stats)
-    state = STATE.ATTACKING
+    if state == STATE.FOLLOW_PATH:
+        state = STATE.ATTACKING
 
 func _on_AttackRadius_area_exited(area):
     if area.controller ==  current_target:
         current_target = null
         area.controller.current_engaged_enemies -= 1
     combat_stats.remove_valid_target(area.controller.combat_stats)
-    if !combat_stats.has_valid_targets():
+    if !combat_stats.has_valid_targets() && state== STATE.ATTACKING:
+        state = STATE.FOLLOW_PATH
+
+
+func knock_back(source_dir):
+    knockback_dir = -global_position.direction_to(source_dir)
+    current_knockback_str = knockback_str
+    state = STATE.KNOCKBACK
+    $KnockbackTimer.start()
+
+
+func _on_KnockbackTimer_timeout():
+    if combat_stats.has_valid_targets():
+        state =STATE.ATTACKING
+    else:
         state = STATE.FOLLOW_PATH

@@ -3,6 +3,7 @@ class_name CombatStats
 signal death
 signal health_changed
 const BASE_ATTACK_TIME = 1.0
+var controller
 export (int) var max_health
 export (int) var health
 export (float) var speed
@@ -10,6 +11,7 @@ export (float) var attack_range
 export (float) var attack_speed = 1.0
 export (float) var attack_damage
 var valid_targets : Array = []
+export (int) var max_targets =1
 var can_attack = true setget set_can_attack;
 
 func deal_damage(target : CombatStats):
@@ -55,3 +57,6 @@ func set_can_attack(value):
     can_attack = value
     if has_valid_targets():
         $AttackTimer.start(BASE_ATTACK_TIME/attack_speed)
+
+func knock_back(source_dir):
+    controller.knock_back(source_dir)

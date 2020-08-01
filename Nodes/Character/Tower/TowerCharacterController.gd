@@ -5,17 +5,20 @@ var state = STATE.INACTIVE
 var positioned_spot = null
 var current_engaged_enemies = 0
 export (int) var maximum_engaged_enemies = 3
-onready var combat_stats : CombatStats = $TowerCombatStats
+onready var combat_stats  = $TowerCombatStats
 onready var attack_range_shape : CircleShape2D = $PhysicCharacterBody/AttackRange/CollisionShape2D.shape
-onready var stats_upgrade_container : Container = $StatsUpgradeHUD/Container
+onready var stats_upgrade_container : Container = $CanvasLayer/StatsUpgradeHUD/Container
+onready var draw_radius  = $PhysicCharacterBody/DrawRadius
 
 func _ready():
     $PhysicCharacterBody/CharacterCollectionArea.controller = self
     $PhysicCharacterBody/DetectionArea.controller = self
     $PhysicCharacterBody/SpriteHealthBar.combat_stats = combat_stats
     update_stats()
+    combat_stats.controller = self
     combat_stats.can_attack = false
     $PhysicCharacterBody/AnimatedSprite.play("inactive")
+    draw_radius.deactivate()
     
 func pickup_range_entered():
     $PhysicCharacterBody/Selector.visible = true
@@ -32,6 +35,7 @@ func pickup():
     combat_stats.can_attack = false
     $PhysicCharacterBody/PhysicBodyShape.set_deferred("disabled",true)
     $PhysicCharacterBody/DetectionArea/CollisionShape2D.set_deferred("disabled",true)
+    draw_radius.deactivate()
 
 func drop(spot):
     $PhysicCharacterBody/AnimationPlayer.play("Squish")
@@ -39,6 +43,7 @@ func drop(spot):
     spot.occupy_spot(self)
     positioned_spot = spot
     if spot.active:
+        draw_radius.activate()
         state = STATE.DEFAULT
         $PhysicCharacterBody/AnimatedSprite.play("default")
         combat_stats.can_attack = true
@@ -49,7 +54,7 @@ func drop(spot):
 
 func update_stats():
     attack_range_shape.radius = ATTACK_RANGE_MULTI * combat_stats.attack_range
-
+    set_stats_ui()  
 
 func _on_AttackRange_area_entered(area):
     if(area.controller.combat_stats):
@@ -62,14 +67,16 @@ func _on_AttackRange_area_exited(area):
 
 func _process(delta):
     $PhysicCharacterBody/RichTextLabel.text = str(current_engaged_enemies)
-    set_stats_ui()
+    $CanvasLayer/StatsUpgradeHUD.rect_position = global_position
 
 func set_stats_ui():
     stats_upgrade_container.get_node("MaximumAttackingEnemies").amount = str(maximum_engaged_enemies)
     stats_upgrade_container.get_node("AttackDamage").amount = str(combat_stats.attack_damage)
     stats_upgrade_container.get_node("AttackSpeed").amount = str(combat_stats.attack_speed)
     stats_upgrade_container.get_node("AttackRange").amount = str(combat_stats.attack_range)
-
+    stats_upgrade_container.get_node("MaxHp").amount = str(combat_stats.max_health)
+    stats_upgrade_container.get_node("UpgradeCost").amount = str(combat_stats.get_level_up_price())
+    draw_radius.radius =  ATTACK_RANGE_MULTI * combat_stats.attack_range
 
 func _on_TowerCombatStats_health_changed():
     $PhysicCharacterBody/AnimationPlayer.play("TakeDamage")
@@ -86,3 +93,5 @@ func quick_hide_stats():
 
 func quick_show_stats():
     stats_upgrade_container.quick_show()
+
+
