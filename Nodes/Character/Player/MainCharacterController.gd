@@ -11,6 +11,7 @@ export (int,LAYERS_2D_PHYSICS) var character_pickup_layer
 export (int,LAYERS_2D_PHYSICS) var character_drop_layer
 onready var hold_position = $PhysicCharacterBody/HoldPosition
 onready var upgrade_progress = $UpgradeProgressUI
+var upgrade_particles = preload("res://Nodes/UpgradeParticles.tscn")
 
 func _ready():
 	Global.player = self
@@ -55,6 +56,9 @@ func _process(delta):
 				if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
 					currency_amount -= cost
 					update_currency()
+					var instance = upgrade_particles.instance()
+					instance.emitting = true
+					holdable_character_in_range.add_child(instance)
 
 func check_cast(cast_position,layer):
 	var space_state = get_world_2d().direct_space_state
