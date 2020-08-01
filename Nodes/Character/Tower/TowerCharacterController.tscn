@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.gd" type="Script" id=1]
 [ext_resource path="res://Nodes/Character/BaseCharacterController.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Assets/Sprites/Tower/TowerAttack2.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Sprites/Tower/TowerAttack1.png" type="Texture" id=20]
 [ext_resource path="res://Nodes/DrawRadius.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Assets/SFX/gaming-jam-2020-sfx_damage_session.wav" type="AudioStream" id=22]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -157,6 +158,10 @@ margin_left = -320.0
 margin_top = -180.0
 margin_right = -320.0
 margin_bottom = -180.0
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="." index="3"]
+stream = ExtResource( 22 )
+volume_db = 2.56
 [connection signal="area_entered" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_entered"]
 [connection signal="area_exited" from="PhysicCharacterBody/AttackRange" to="." method="_on_AttackRange_area_exited"]
 [connection signal="death" from="TowerCombatStats" to="." method="_on_TowerCombatStats_death"]

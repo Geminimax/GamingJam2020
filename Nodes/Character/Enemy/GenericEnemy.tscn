@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
+[ext_resource path="res://Assets/SFX/gaming-jam-2020-sfx_damage-enemy_session.wav" type="AudioStream" id=1]
 [ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.gd" type="Script" id=2]
 [ext_resource path="res://Nodes/Combat/CombatStats.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Nodes/UI/TinySpriteHealthbar.tscn" type="PackedScene" id=4]
@@ -67,6 +68,9 @@ position = Vector2( 0, 16 )
 [node name="KnockbackTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 1 )
 [connection signal="death" from="CombatStats" to="." method="_on_CombatStats_death"]
 [connection signal="health_changed" from="CombatStats" to="." method="_on_CombatStats_health_changed"]
 [connection signal="area_entered" from="AttackRadius" to="." method="_on_AttackRadius_area_entered"]

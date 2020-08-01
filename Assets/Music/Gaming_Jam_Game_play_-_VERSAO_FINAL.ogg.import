@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Gaming_Jam_Game_play_-_VERSAO_FINAL.ogg-b3ddddb8189edc7f16badad2d46063c4.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/Gaming_Jam_Game_play_-_VERSAO_FINAL.ogg"
+dest_files=[ "res://.import/Gaming_Jam_Game_play_-_VERSAO_FINAL.ogg-b3ddddb8189edc7f16badad2d46063c4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
