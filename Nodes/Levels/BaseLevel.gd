@@ -7,10 +7,11 @@ signal level_restart
 signal level_done(next_level)
 export (PackedScene) var next_level
 export (PackedScene) var enemy_count_display
+
+var running = true
 var wave_max_time = -1
-const START_BASE_HP = 5
-var base_hp = START_BASE_HP
-var wave_base_time
+var base_hp
+var wave_base_time = 1
 var panels = []
 var visible_enemies = 0
 var waves_to_next_level = 0
@@ -18,6 +19,11 @@ export (float) var base_wave_time = 9.0
 export (float) var wave_time_progress = 2.0
 export (float) var rest_time = 6.0
 var total_wave_count = 0
+
+
+var fireworks = preload("res://Nodes/VictoryFireworks.tscn")
+onready var dynfont = DynamicFont.new()
+
 func _ready():
     randomize()
     #font.size = 16
@@ -28,29 +34,38 @@ func _ready():
         spawner.setnav_2d($Level)
     waves_to_next_level = spawners[0].get_total_waves()
     for panel in get_tree().get_nodes_in_group("panels"):
-        panel.rect_size.y = 54
         panels.push_back(panel)
     $WaveTimer.start()
 
 func _process(delta):
-    if get_tree().get_nodes_in_group("spawners")[0].completed and visible_enemies <= 0:
-        handle_win()
-    if base_hp <= 0:
-        handle_defeat()
+    base_hp = $EnemyObjective/CombatStats.health
+    if running:
+        if get_tree().get_nodes_in_group("spawners")[0].wave_count >= waves_to_next_level and visible_enemies <= 0:
+            handle_win()
+            running = false
+        if base_hp <= 0:
+            handle_defeat()
+            running = false
 
 func handle_win():
-    $WaveWait.stop()
+    $WaveTimer.stop()
     $WavesRemaining.visible = false
     var spawners = get_tree().get_nodes_in_group("spawners")
     $ResultMessage.text = "Victory!"
     for s in spawners:
         s.should_spawn = false
+    fireworks()
     emit_signal("level_done", next_level)
+
+func fireworks():
+    for child in $ResultMessage.get_children():
+        var particle_instance = fireworks.instance()
+        child.add_child(particle_instance)
 
 func handle_defeat():
     $ResultMessage.text = "Defeat"
     var spawners = get_tree().get_nodes_in_group("spawners")
-    $WaveWait.stop()
+    $WaveTimer.stop()
     for s in spawners:
         s.stop_all_enemies(true)
     emit_signal("level_restart")
@@ -60,6 +75,7 @@ func spawn_wave_enemyspawners():
         return
     var time = base_wave_time + wave_time_progress * total_wave_count
     total_wave_count += 1
+    
     var spawners = get_tree().get_nodes_in_group("spawners")
     var wave_count = spawners[0].wave_count
     
@@ -67,7 +83,7 @@ func spawn_wave_enemyspawners():
     for i in spawners.size():
         var types = []
         var count = []
-        
+        print("spawner wi - " + str(spawners[i].wave_interval))
         wave_max_time = max(wave_max_time, spawners[i].wave_interval)
         
         var wave = spawners[i].wave_configuration[spawners[i].current_wave_configuration]
@@ -83,7 +99,6 @@ func make_wave_panel(panel, types, count):
     panel.visible = true
     panel.clear()
     for i in types.size():
-        print(types)
 #
 #        var sprite = Sprite.new()
 #        sprite.texture = texture

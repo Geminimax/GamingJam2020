@@ -4,6 +4,8 @@ const MAX_LEVEL = 5
 
 var level = 1
 
+signal max_level_achieved
+
 export (int) var level_up_price_base = 5
 export (int) var level_up_price_increment = 1
 export (int) var level_up_price_multi = 0.1
@@ -13,14 +15,20 @@ export (float) var attack_speed_increment
 export (float) var attack_damage_increment
 export (bool) var knockback = false
 
+func _ready():
+    connect("max_level_achieved", get_parent(), "max_level_handle")
+
 func get_level_up_price():
     return (level_up_price_base + (level_up_price_increment * (level - 1))) * (1 + level_up_price_multi * (level - 1))
 
 func level_up():
     if(level >= MAX_LEVEL):
+        emit_signal("max_level_achieved")
         return false
     else:
         level += 1
+        if level >= MAX_LEVEL:
+            emit_signal("max_level_achieved")
         attack_range += attack_range_increment
         attack_speed += attack_speed_increment
         
