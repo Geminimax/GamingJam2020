@@ -7,3 +7,6 @@ var body = self
 
 func _ready():
     $DetectionArea.controller = self
+
+func _process(delta):
+    $SpriteHealthBar.update_health_bar_value($CombatStats.health, $CombatStats.max_health)

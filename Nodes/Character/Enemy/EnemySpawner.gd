@@ -51,6 +51,7 @@ func spawn_wave():
                 for i in range(enemy_quantity):
                     if should_spawn:
                         spawn_enemy(current_enemy)
+                        print(enemy_spawn_wait)
                         yield(get_tree().create_timer(enemy_spawn_wait), "timeout")
 
 func stop_all_enemies(kill: bool):

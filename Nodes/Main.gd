@@ -12,7 +12,7 @@ func _ready():
     current_level.connect("level_done", self, "on_level_done")
     current_level.connect("level_restart", self, "restart_level")
 
-func on_level_done():
+func on_level_done(next_level):
     pass
 
 func restart_level():
