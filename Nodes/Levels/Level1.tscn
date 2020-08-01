@@ -33,7 +33,7 @@ enemy_count_progression = 1
 [sub_resource type="Resource" id=4]
 script = ExtResource( 8 )
 enemy_type = ExtResource( 11 )
-enemy_count = 4
+enemy_count = 3
 enemy_count_progression = 1
 
 [sub_resource type="Resource" id=5]
