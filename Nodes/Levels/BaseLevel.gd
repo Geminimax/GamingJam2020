@@ -55,6 +55,7 @@ func handle_win():
     for s in spawners:
         s.should_spawn = false
     fireworks()
+    yield(get_tree().create_timer(5.0),"timeout")
     emit_signal("level_done", next_level)
 
 func fireworks():
@@ -68,6 +69,7 @@ func handle_defeat():
     $WaveTimer.stop()
     for s in spawners:
         s.stop_all_enemies(true)
+    yield(get_tree().create_timer(5.0),"timeout")
     emit_signal("level_restart")
     
 func spawn_wave_enemyspawners():
