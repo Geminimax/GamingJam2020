@@ -23,15 +23,15 @@ animations = [ {
 "name": "default",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 15 ) ],
-"loop": true,
-"name": "inactive",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ) ],
 "loop": false,
 "name": "attack",
 "speed": 15.0
+}, {
+"frames": [ ExtResource( 15 ) ],
+"loop": true,
+"name": "inactive",
+"speed": 5.0
 } ]
 
 [sub_resource type="Gradient" id=2]
