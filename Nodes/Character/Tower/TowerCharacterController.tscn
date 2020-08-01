@@ -136,16 +136,7 @@ anims/TakeDamage = SubResource( 6 )
 position = Vector2( 0, -24 )
 z_index = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PhysicCharacterBody" index="8"]
-margin_left = -18.3516
-margin_top = -50.9767
-margin_right = 21.6484
-margin_bottom = -10.9767
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DrawRadius" parent="PhysicCharacterBody" index="9" instance=ExtResource( 21 )]
+[node name="DrawRadius" parent="PhysicCharacterBody" index="8" instance=ExtResource( 21 )]
 
 [node name="TowerCombatStats" parent="." index="1" instance=ExtResource( 6 )]
 max_health = 30
