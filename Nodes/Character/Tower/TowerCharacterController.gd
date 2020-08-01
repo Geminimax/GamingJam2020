@@ -95,3 +95,5 @@ func quick_show_stats():
     stats_upgrade_container.quick_show()
 
 
+func max_level_handle():
+        stats_upgrade_container.get_node("UpgradeCost").set_modulate(Color(1, 0, 0))

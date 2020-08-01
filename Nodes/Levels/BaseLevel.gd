@@ -8,9 +8,8 @@ signal level_done(next_level)
 export (PackedScene) var next_level
 export (PackedScene) var enemy_count_display
 var wave_max_time = -1
-const START_BASE_HP = 5
-var base_hp = START_BASE_HP
-var wave_base_time
+var base_hp
+var wave_base_time = 1
 var panels = []
 var visible_enemies = 0
 var waves_to_next_level = 0
@@ -45,7 +44,13 @@ func handle_win():
     $ResultMessage.text = "Victory!"
     for s in spawners:
         s.should_spawn = false
+    fireworks()
     emit_signal("level_done", next_level)
+
+func fireworks():
+    for child in $ResultMessage.get_children():
+        var particle_instance = fireworks.instance()
+        child.add_child(particle_instance)
 
 func handle_defeat():
     $ResultMessage.text = "Defeat"
@@ -67,7 +72,7 @@ func spawn_wave_enemyspawners():
     for i in spawners.size():
         var types = []
         var count = []
-        
+        print("spawner wi - " + str(spawners[i].wave_interval))
         wave_max_time = max(wave_max_time, spawners[i].wave_interval)
         
         var wave = spawners[i].wave_configuration[spawners[i].current_wave_configuration]

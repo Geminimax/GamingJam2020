@@ -11,7 +11,7 @@ signal enemy_on_end
 export (int, LAYERS_2D_PHYSICS) var enemy_layer = 0
 
 export (float) var wait_time = 0.5
-export (float) var wave_interval = 0.3
+export (float) var wave_interval = 0.5
 export (PackedScene) var coin_scene 
 export (float) var coin_velocity_range = 60
 export (float) var drop_coin_amount = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Nodes/Levels/BaseLevel.gd" type="Script" id=2]
@@ -16,7 +16,9 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 14 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 14 )
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=3]
 outline_size = 1
@@ -76,12 +78,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResultMessage" type="RichTextLabel" parent="."]
+[node name="ResultMessage" type="Label" parent="."]
 margin_left = 275.778
 margin_top = 62.9275
 margin_right = 417.778
 margin_bottom = 110.927
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -109,6 +111,9 @@ text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="EnemyObjective" parent="." instance=ExtResource( 6 )]
+position = Vector2( 559.801, 168.145 )
 [connection signal="player_coins" from="MainCharacterController" to="." method="_on_MainCharacterController_player_coins"]
 [connection signal="timeout" from="WaveTimer" to="." method="_on_WaveTimer_timeout"]
 [connection signal="timeout" from="RestTimer" to="." method="_on_RestTimer_timeout"]
