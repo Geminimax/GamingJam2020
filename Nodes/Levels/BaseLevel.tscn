@@ -1,89 +1,29 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Nodes/Character/Player/MainCharacterController.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Nodes/Character/Tower/TowerCharacterController.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Nodes/DropSpot.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Nodes/Character/Enemy/EnemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Tilemap/tilemap.tres" type="TileSet" id=5]
-[ext_resource path="res://Test/CharacterTestScene.gd" type="Script" id=6]
+[ext_resource path="res://Nodes/Levels/BaseLevel.gd" type="Script" id=6]
 [ext_resource path="res://Nodes/Base.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Resource/EnemyConfiguration.gd" type="Script" id=8]
-[ext_resource path="res://Resource/Wave.gd" type="Script" id=9]
-[ext_resource path="res://Nodes/Character/Enemy/GenericEnemy.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Nodes/Character/Enemy/RareEnemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tilemap/visual_tileset.tres" type="TileSet" id=12]
-[ext_resource path="res://Nodes/HealingDropSpot.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Assets/Pixeled.ttf" type="DynamicFontData" id=14]
-[ext_resource path="res://Nodes/HeartBox.tscn" type="PackedScene" id=15]
 
-[sub_resource type="Resource" id=1]
-script = ExtResource( 8 )
-enemy_type = ExtResource( 10 )
-enemy_count = 1
-enemy_count_progression = 1
-
-[sub_resource type="Resource" id=2]
-script = ExtResource( 8 )
-enemy_type = ExtResource( 11 )
-enemy_count = 2
-enemy_count_progression = 0
-
-[sub_resource type="Resource" id=3]
-script = ExtResource( 9 )
-enemy_configuration = [ SubResource( 1 ), SubResource( 2 ) ]
-wave_count = 0
-
-[sub_resource type="Resource" id=4]
-script = ExtResource( 8 )
-enemy_type = ExtResource( 11 )
-enemy_count = 1
-enemy_count_progression = 0
-
-[sub_resource type="Resource" id=5]
-script = ExtResource( 9 )
-enemy_configuration = [ SubResource( 1 ), SubResource( 4 ) ]
-wave_count = 0
-
-[sub_resource type="Theme" id=6]
-
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=1]
 size = 7
 font_data = ExtResource( 14 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 14 )
 
-[node name="CharacterTestScene" type="Node2D"]
+[node name="BaseLevel" type="Node2D"]
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_vertical_guides_": [  ]
 }
 
-[node name="TowerCharacterController" parent="." instance=ExtResource( 2 )]
-position = Vector2( 456, 264 )
-
-[node name="TowerCharacterController2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 264, 248 )
-
 [node name="MainCharacterController" parent="." instance=ExtResource( 1 )]
 position = Vector2( 72, 64 )
 move_speed = 140.0
 accel_lerp_weight = 10.0
-
-[node name="HealingDropSpot" parent="." instance=ExtResource( 13 )]
-position = Vector2( 352, 272 )
-
-[node name="HealingDropSpot2" parent="." instance=ExtResource( 13 )]
-position = Vector2( 408, 272 )
-
-[node name="DropSpot" parent="." instance=ExtResource( 3 )]
-position = Vector2( 192, 160 )
-
-[node name="DropSpot2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 384, 168 )
-
-[node name="DropSpot3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 544, 200 )
 
 [node name="Level" type="Navigation2D" parent="."]
 
@@ -109,75 +49,29 @@ cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( 131118, 1, 0, 131119, 1, 0, 196633, 0, 262160, 196634, 3, 0, 196651, 1, 0, 196652, 1, 0, 196653, 1, 0, 196654, 1, 0, 262168, 0, 262160, 262169, 0, 262160, 262170, 3, 0, 262185, 1, 0, 262186, 1, 0, 262187, 1, 0, 262188, 4, 0, 262189, 4, 0, 327690, 8, 0, 327691, 8, 0, 327692, 8, 0, 327704, 0, 262160, 327705, 3, 0, 327706, 3, 0, 327707, 3, 0, 327718, 1, 0, 327719, 1, 0, 327720, 1, 0, 327721, 1, 0, 327722, 4, 0, 327723, 1, 0, 327724, 4, 0, 327725, 3, 0, 327726, 3, 0, 327727, 3, 0, 327730, 1, 0, 393228, 8, 0, 393229, 8, 0, 393230, 8, 0, 393231, 8, 0, 393232, 8, 0, 393240, 0, 262160, 393242, 3, 0, 393247, 4, 0, 393253, 1, 0, 393254, 1, 0, 393256, 3, 0, 393257, 3, 0, 393258, 1, 0, 393259, 3, 0, 393260, 3, 0, 393261, 1, 0, 393262, 1, 0, 393263, 1, 0, 393264, 1, 0, 393265, 1, 0, 393266, 4, 0, 458754, 4, 0, 458765, 8, 0, 458766, 8, 0, 458768, 8, 0, 458778, 3, 0, 458780, 3, 0, 458781, 4, 0, 458782, 4, 0, 458785, 4, 0, 458790, 3, 0, 458791, 3, 0, 458794, 3, 0, 458796, 4, 0, 458797, 4, 0, 458798, 1, 0, 458799, 1, 0, 458800, 1, 0, 458801, 1, 0, 458802, 1, 0, 458803, 1, 0, 458804, 1, 0, 524302, 8, 0, 524303, 8, 0, 524315, 3, 0, 524316, 3, 0, 524317, 4, 0, 524318, 4, 0, 524319, 4, 0, 524320, 4, 0, 524329, 4, 0, 524330, 4, 0, 524331, 4, 0, 524332, 4, 0, 524333, 4, 0, 524334, 4, 0, 524335, 4, 0, 589826, 4, 0, 589830, 4, 0, 589831, 4, 0, 589832, 4, 0, 589839, 8, 0, 589840, 8, 0, 589851, 3, 0, 589854, 4, 0, 589857, 4, 0, 589858, 4, 0, 589859, 4, 0, 589860, 2, 0, 589863, 4, 0, 589864, 4, 0, 589865, 2, 0, 589873, 1, 0, 589874, 1, 0, 589876, 1, 0, 589877, 1, 0, 589878, 1, 0, 589879, 1, 0, 589884, 1, 0, 589885, 1, 0, 589886, 1, 0, 655377, 8, 0, 655387, 3, 0, 655390, 4, 0, 655391, 3, 0, 655392, 3, 0, 655400, 2, 0, 655401, 2, 0, 655405, 2, 0, 655406, 2, 0, 655408, 1, 0, 655409, 1, 0, 655410, 1, 0, 655411, 1, 0, 655412, 1, 0, 655413, 1, 0, 655414, 1, 0, 720899, 4, 0, 720926, 3, 0, 720927, 3, 0, 720931, 4, 0, 720932, 4, 0, 720939, 2, 0, 720940, 2, 0, 720949, 1, 0, 720951, 4, 0, 720952, 4, 0, 720953, 4, 0, 786473, 2, 0, 786474, 2, 0, 786478, 4, 0, 786480, 4, 0, 786481, 1, 0, 786482, 1, 0, 786483, 1, 0, 786484, 1, 0, 786485, 4, 0, 786486, 4, 0, 851972, 4, 0, 851973, 4, 0, 851978, 4, 0, 851986, 8, 0, 852010, 4, 0, 852011, 4, 0, 852012, 4, 0, 852013, 4, 0, 852014, 4, 0, 852015, 4, 0, 852016, 1, 0, 852017, 1, 0, 852018, 1, 0, 852019, 1, 0, 852021, 4, 0, 917508, 4, 0, 917511, 4, 0, 917513, 4, 0, 917514, 4, 0, 917523, 8, 0, 917525, 8, 0, 917526, 8, 0, 917546, 4, 0, 917547, 4, 0, 917548, 4, 0, 917549, 4, 0, 917551, 1, 0, 917552, 1, 0, 917553, 1, 0, 917554, 1, 0, 983045, 4, 0, 983046, 4, 0, 983047, 4, 0, 983061, 8, 0, 983062, 8, 0, 983081, 4, 0, 1048580, 4, 0, 1048581, 4, 0, 1245204, 8, 0, 1245220, 8, 0, 1245221, 8, 0, 1310734, 8, 0, 1310735, 8, 0, 1310736, 8, 0, 1310757, 8, 0, 1310758, 8, 0, 1310759, 8, 0, 1310763, 8, 0, 1376264, 8, 0, 1376265, 8, 0, 1376267, 8, 0, 1376269, 8, 0, 1376270, 8, 0, 1376271, 8, 0, 1376272, 8, 0, 1376274, 8, 0, 1376296, 8, 0, 1376297, 8, 0, 1376298, 8, 0, 1376299, 8, 0, 1376300, 8, 0, 1441798, 8, 0, 1441799, 8, 0, 1441800, 8, 0, 1441801, 8, 0, 1441802, 8, 0, 1441804, 8, 0, 1441805, 8, 0, 1441806, 8, 0, 1441807, 8, 0, 1441808, 8, 0, 1441809, 8, 0, 1507332, 8, 0, 1507333, 8, 0, 1507334, 8, 0, 1507343, 8, 0, 1507344, 8, 0, 1572868, 8, 0, 1572869, 8, 0, 1638405, 8, 0, 1638406, 8, 0, 1703942, 8, 0, 1703943, 8, 0, 1703944, 8, 0, 1835025, 3, 0, 1835050, 1, 0, 1835051, 1, 0, 1835052, 1, 0, 1835055, 1, 0, 1835056, 1, 0, 1835057, 1, 0, 1900558, 4, 0, 1900560, 3, 0, 1900586, 1, 0, 1900587, 1, 0, 1900588, 4, 0, 1966094, 4, 0, 1966100, 3, 0, 1966120, 1, 0, 1966121, 1, 0, 1966122, 4, 0, 1966123, 4, 0, 1966124, 4, 0, 2031620, 2, 0, 2031621, 2, 0, 2031624, 2, 0, 2031629, 4, 0, 2031630, 4, 0, 2031634, 3, 0, 2031635, 3, 0, 2031652, 4, 0, 2031653, 4, 0, 2031654, 1, 0, 2031655, 1, 0, 2031656, 4, 0, 2031657, 1, 0, 2031658, 1, 0, 2031659, 4, 0, 2031669, 2, 0, 2097155, 2, 0, 2097156, 2, 0, 2097157, 1, 0, 2097158, 1, 0, 2097159, 1, 0, 2097160, 1, 0, 2097161, 1, 0, 2097162, 1, 0, 2097168, 3, 0, 2097169, 4, 0, 2097170, 3, 0, 2097171, 3, 0, 2097172, 4, 0, 2097187, 4, 0, 2097188, 4, 0, 2097189, 1, 0, 2097190, 1, 0, 2097191, 1, 0, 2097192, 1, 0, 2097201, 2, 0, 2097202, 2, 0, 2097203, 2, 0, 2097204, 2, 0, 2097205, 2, 0, 2097206, 2, 0, 2162688, 1, 0, 2162689, 1, 0, 2162690, 1, 0, 2162691, 1, 0, 2162692, 1, 0, 2162693, 1, 0, 2162695, 1, 0, 2162696, 1, 0, 2162697, 1, 0, 2162698, 4, 0, 2162699, 4, 0, 2162704, 4, 0, 2162705, 4, 0, 2162706, 4, 0, 2162707, 4, 0, 2162708, 4, 0, 2162709, 1, 0, 2162710, 2, 0, 2162723, 1, 0, 2162724, 1, 0, 2162725, 1, 0, 2162726, 1, 0, 2162727, 1, 0, 2162728, 1, 0, 2162741, 2, 0, 2162763, 1, 0, 2228226, 1, 0, 2228227, 1, 0, 2228228, 1, 0, 2228229, 1, 0, 2228230, 1, 0, 2228231, 4, 0, 2228232, 4, 0, 2228233, 4, 0, 2228234, 4, 0, 2228235, 4, 0, 2228239, 4, 0, 2228240, 4, 0, 2228241, 4, 0, 2228242, 4, 0, 2228243, 1, 0, 2228244, 1, 0, 2228245, 2, 0, 2228246, 2, 0, 2228271, 1, 0, 2228272, 1, 0, 2228279, 3, 0, 2228280, 3, 0, 2228297, 1, 0, 2228298, 1, 0, 2228301, 1, 0, 2293767, 4, 0, 2293770, 4, 0, 2293772, 4, 0, 2293773, 4, 0, 2293774, 4, 0, 2293776, 4, 0, 2293777, 4, 0, 2293779, 1, 0, 2293781, 2, 0, 2293782, 1, 0, 2293803, 2, 0, 2293804, 3, 0, 2293805, 3, 0, 2293806, 3, 0, 2293807, 3, 0, 2293809, 3, 0, 2293810, 3, 0, 2293811, 3, 0, 2293812, 3, 0, 2293813, 3, 0, 2293814, 3, 0, 2293821, 1, 0, 2293822, 1, 0, 2293823, 1, 0, 2293824, 1, 0, 2293828, 1, 0, 2293829, 1, 0, 2293830, 1, 0, 2293831, 1, 0, 2293832, 1, 0, 2293834, 1, 0, 2293835, 1, 0, 2293836, 1, 0, 2424830, 2, 0, 2424831, 2, 0, 2359307, 4, 0, 2359308, 4, 0, 2359309, 4, 0, 2359316, 1, 0, 2359317, 1, 0, 2359337, 2, 0, 2359338, 2, 0, 2359339, 2, 0, 2359340, 3, 0, 2359341, 3, 0, 2359342, 3, 0, 2359343, 1, 0, 2359344, 3, 0, 2359345, 3, 0, 2359346, 1, 0, 2359347, 1, 0, 2359349, 3, 0, 2359350, 3, 0, 2359352, 1, 0, 2359353, 1, 0, 2359354, 1, 0, 2359355, 1, 0, 2359356, 1, 0, 2359362, 1, 0, 2359363, 1, 0, 2359369, 1, 0, 2359370, 1, 0, 2359381, 0, 262160, 2424838, 4, 0, 2424839, 4, 0, 2424842, 4, 0, 2424843, 4, 0, 2424844, 4, 0, 2424845, 4, 0, 2424848, 4, 0, 2424849, 4, 0, 2424852, 1, 0, 2424870, 2, 0, 2424871, 2, 0, 2424872, 2, 0, 2424874, 3, 0, 2424875, 3, 0, 2424876, 4, 0, 2424877, 3, 0, 2424878, 3, 0, 2424879, 3, 0, 2424880, 3, 0, 2424881, 3, 0, 2424887, 1, 0, 2424917, 0, 262160, 2490378, 4, 0, 2490384, 4, 0, 2490405, 2, 0, 2490406, 2, 0, 2490407, 3, 0, 2490408, 4, 0, 2490409, 4, 0, 2490410, 4, 0, 2490411, 4, 0, 2490412, 4, 0, 2490413, 4, 0, 2490414, 1, 0, 2490415, 1, 0, 2555919, 4, 0, 2555920, 4, 0, 2555927, 1, 0, 2555940, 1, 0, 2555941, 1, 0, 2555942, 1, 0, 2555943, 4, 0, 2555944, 1, 0, 2555945, 4, 0, 2555946, 4, 0, 2555947, 4, 0, 2555948, 4, 0, 2555949, 1, 0, 2555950, 1, 0, 2555951, 1, 0, 2555956, 1, 0, 2555957, 1, 0, 2555958, 1, 0, 2555959, 1, 0, 2555979, 1, 0, 2555980, 1, 0, 2555981, 1, 0, 2621453, 2, 0, 2621454, 2, 0, 2621455, 4, 0, 2621462, 1, 0, 2621463, 1, 0, 2621470, 3, 0, 2621473, 3, 0, 2621477, 3, 0, 2621478, 3, 0, 2621479, 3, 0, 2621480, 1, 0, 2621481, 4, 0, 2621482, 1, 0, 2621483, 1, 0, 2621484, 1, 0, 2621485, 3, 0, 2621486, 3, 0, 2621487, 3, 0, 2686984, 2, 0, 2686985, 2, 0, 2686986, 2, 0, 2686987, 2, 0, 2686988, 2, 0, 2686989, 2, 0, 2687007, 3, 0, 2687010, 3, 0, 2687011, 3, 0, 2687014, 1, 0, 2687015, 1, 0, 2687016, 1, 0, 2687017, 1, 0, 2687018, 1, 0, 2687019, 3, 0, 2687020, 3, 0, 2687021, 3, 0, 2687022, 3, 0, 2687023, 2, 0, 2752556, 2, 0, 2752557, 2, 0, 2752558, 2, 0 )
 
-[node name="EnemySpawner1" parent="." groups=[
-"spawners",
-] instance=ExtResource( 4 )]
-position = Vector2( 23.0401, 198.042 )
-wave_configuration = [ SubResource( 3 ) ]
-
-[node name="EnemySpawner2" parent="." groups=[
-"spawners",
-] instance=ExtResource( 4 )]
-position = Vector2( 80, 24 )
-wave_configuration = [ SubResource( 5 ) ]
-
 [node name="WaveWait" type="Timer" parent="."]
 one_shot = true
-
-[node name="Panel2" type="Panel" parent="." groups=[
-"panels",
-]]
-visible = false
-margin_left = 165.175
-margin_top = 0.665993
-margin_right = 205.175
-margin_bottom = 40.666
-theme = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel1" type="Panel" parent="." groups=[
-"panels",
-]]
-visible = false
-margin_left = 9.7866
-margin_top = 93.2181
-margin_right = 35.7866
-margin_bottom = 147.218
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="WavesRemaining" type="Label" parent="."]
 margin_left = 386.919
 margin_top = 4.18549
 margin_right = 535.919
 margin_bottom = 25.1855
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="HeartBox" parent="." instance=ExtResource( 15 )]
-margin_left = 513.34
-margin_top = 68.688
-margin_right = 633.34
-margin_bottom = 108.688
-custom_constants/separation = 5
 
 [node name="ResultMessage" type="RichTextLabel" parent="."]
 margin_left = 275.778
 margin_top = 62.9275
 margin_right = 417.778
 margin_bottom = 110.927
-custom_fonts/normal_font = SubResource( 8 )
+custom_fonts/normal_font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EnemyObjective" parent="." instance=ExtResource( 7 )]
 position = Vector2( 632.575, 174.644 )
-[connection signal="timeout" from="WaveWait" to="EnemySpawner2" method="spawn_wave"]
-[connection signal="timeout" from="WaveWait" to="EnemySpawner1" method="spawn_wave"]
 [connection signal="timeout" from="WaveWait" to="." method="spawn_wave_enemyspawners"]

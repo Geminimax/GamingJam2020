@@ -1,5 +1,12 @@
 extends Node2D
 
+# grupo spawners
+# grupo panels
+
+signal level_restart
+signal level_done(next_level)
+export (PackedScene) var next_level
+
 var wave_max_time = -1
 const START_BASE_HP = 5
 var base_hp = START_BASE_HP
@@ -9,14 +16,22 @@ var font = load("res://Assets/Pixeled.ttf")
 var visible_enemies = 0
 const WAVES_TO_NEXT_LEVEL = 4
 
+onready var dynfont = DynamicFont.new()
+
 func _ready():
     randomize()
+    dynfont.font_data = preload("res://Assets/Pixeled.ttf")
+    dynfont.size = 7
     #font.size = 16
-    $WaveWait.wait_time = $EnemySpawner1.FIRST_WAVE_WAIT
-    $HeartBox.setup(START_BASE_HP)
-    wave_base_time = $EnemySpawner1.WAVE_BASE_TIME
-    for spawner in get_tree().get_nodes_in_group("spawners"):
+    
+    #$HeartBox.setup(START_BASE_HP)
+    
+    var spawners = get_tree().get_nodes_in_group("spawners")
+    $WaveWait.wait_time = spawners[0].FIRST_WAVE_WAIT
+    wave_base_time = spawners[0].WAVE_BASE_TIME
+    for spawner in spawners:
         spawner.setnav_2d($Level)
+        $WaveWait.connect("timeout", spawner, "spawn_wave")
 
     for panel in get_tree().get_nodes_in_group("panels"):
         panel.rect_size.y = 54
@@ -36,6 +51,7 @@ func handle_win():
     $ResultMessage.text = "Victory!"
     for s in spawners:
         s.should_spawn = false
+    emit_signal("level_done", next_level)
 
 func handle_defeat():
     $ResultMessage.text = "Defeat"
@@ -43,8 +59,10 @@ func handle_defeat():
     $WaveWait.stop()
     for s in spawners:
         s.stop_all_enemies(true)
+    emit_signal("level_restart")
     
 func spawn_wave_enemyspawners():
+    print("opa")
     wave_max_time = -1
     var spawners = get_tree().get_nodes_in_group("spawners")
     var wave_count = spawners[0].wave_count
@@ -55,6 +73,7 @@ func spawn_wave_enemyspawners():
 
     $WavesRemaining.text = "Waves remaining: " + str(WAVES_TO_NEXT_LEVEL - wave_count)
     for i in spawners.size():
+        print("aaaa")
         var types = []
         var count = []
         
@@ -78,17 +97,14 @@ func make_wave_panel(panel: Panel, types, count):
         
         var sprite = Sprite.new()
         sprite.texture = texture
-        sprite.position = Vector2(i * 30 + 10,  12)
+        sprite.position = Vector2(i * 31 + 10,  12)
         panel.add_child(sprite)
 
     for i in count.size():
         var lbl = Label.new()
-        var dynfont = DynamicFont.new()
-        dynfont.font_data = preload("res://Assets/Pixeled.ttf")
-        dynfont.size = 7
         lbl.text = "x" + str(count[i])
         lbl.margin_top = 32.0
-        lbl.margin_left = 5 + i * 30
+        lbl.margin_left = 5 + i * 31
         lbl.add_font_override("font", dynfont)
         panel.add_child(lbl)
     

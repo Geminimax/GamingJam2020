@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Gaming Jam 2020"
-run/main_scene="res://Test/CharacterTestScene.tscn"
+run/main_scene="res://Nodes/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
