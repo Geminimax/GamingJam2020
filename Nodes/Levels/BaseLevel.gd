@@ -97,7 +97,7 @@ func make_wave_panel(panel: Panel, types, count):
         
         var sprite = Sprite.new()
         sprite.texture = texture
-        sprite.position = Vector2(i * 31 + 10,  12)
+        sprite.position = Vector2(i * 31 + 13,  12)
         panel.add_child(sprite)
 
     for i in count.size():
