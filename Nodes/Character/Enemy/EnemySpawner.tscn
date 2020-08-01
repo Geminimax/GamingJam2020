@@ -9,13 +9,13 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 5 )
 enemy_type = ExtResource( 2 )
-enemy_count = 2
+enemy_count = 0
 enemy_count_progression = 0
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 5 )
 enemy_type = ExtResource( 3 )
-enemy_count = 1
+enemy_count = 0
 enemy_count_progression = 0
 
 [sub_resource type="Resource" id=3]
