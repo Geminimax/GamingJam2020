@@ -45,7 +45,8 @@ wave_count = 3
 [node name="Level1" instance=ExtResource( 1 )]
 visible = true
 next_level = ExtResource( 12 )
-base_wave_time = 6.0
+base_wave_time = 5.0
+wave_time_progress = 1.5
 rest_time = 5.0
 
 [node name="TileMap" parent="Level" index="0"]
@@ -96,7 +97,7 @@ position = Vector2( 216.607, 372.417 )
 
 [node name="Furnace" parent="EnemyObjective" index="0"]
 position = Vector2( -61.7185, -1.19746 )
-frame = 2
+frame = 1
 
 [node name="SpriteHealthBar" parent="EnemyObjective/Furnace" index="0"]
 position = Vector2( -18.8885, -35.2195 )

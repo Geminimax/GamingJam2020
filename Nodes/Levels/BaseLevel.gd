@@ -98,6 +98,8 @@ func spawn_wave_enemyspawners():
     
               
 func make_wave_panel(panel, types, count):
+    if !panel:
+        return
     panel.visible = true
     panel.clear()
     for i in types.size():

@@ -16,8 +16,10 @@ func _ready():
 func on_level_done(next_level):
     print("Next level")
     current_level.queue_free()
-    var new_level = next_level.instance()
+    yield(current_level,"tree_exited")
+    var new_level = next_level.instance()   
     add_child(new_level)
+    current_level = new_level
 
 
 func restart_level():

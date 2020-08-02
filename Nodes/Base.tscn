@@ -29,7 +29,7 @@ script = ExtResource( 3 )
 [node name="Furnace" type="AnimatedSprite" parent="."]
 position = Vector2( 56.2813, -1.19746 )
 frames = SubResource( 1 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="SpriteHealthBar" parent="Furnace" instance=ExtResource( 10 )]
@@ -49,8 +49,8 @@ position = Vector2( 25.5328, -28.4209 )
 position = Vector2( 27.5762, -33.5293 )
 
 [node name="CombatStats" parent="." instance=ExtResource( 1 )]
-max_health = 25
-health = 25
+max_health = 50
+health = 50
 attack_speed = 0.0
 
 [node name="DetectionArea" type="Area2D" parent="."]

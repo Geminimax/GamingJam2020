@@ -19,7 +19,7 @@ func _ready():
     connect("max_level_achieved", get_parent(), "max_level_handle")
 
 func get_level_up_price():
-    return (level_up_price_base + (level_up_price_increment * (level - 1))) * (1 + level_up_price_multi * (level - 1))
+    return round(level_up_price_base + (level_up_price_increment * (level - 1))) * (1 + level_up_price_multi * (level - 1))
 
 func level_up():
     if(level >= MAX_LEVEL):
@@ -49,6 +49,7 @@ func attack():
             valid_targets[i].knock_back(controller.body.global_position)
         deal_damage(valid_targets[i])
     controller.sprite.play(prev_anim)
+    $Damage.play()
 
 func additional_anim():
     pass

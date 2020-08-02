@@ -106,7 +106,7 @@ func _on_CombatStats_death():
 func _on_CombatStats_health_changed():
     $CPUParticles2D.restart()
     $AnimationPlayer.play("TakeDamage")
-    $Damage.play()
+    
 
 
 func _on_AttackRadius_area_entered(area):

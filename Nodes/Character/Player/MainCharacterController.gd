@@ -10,8 +10,6 @@ var currency_amount = 0
 export (int,LAYERS_2D_PHYSICS) var character_pickup_layer
 export (int,LAYERS_2D_PHYSICS) var character_drop_layer
 onready var hold_position = $PhysicCharacterBody/HoldPosition
-
-onready var upgrade_progress = $UpgradeProgressUI
 var upgrade_particles = preload("res://Nodes/UpgradeParticles.tscn")
 
 func _ready():
