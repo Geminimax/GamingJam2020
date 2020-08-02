@@ -76,7 +76,7 @@ func set_stats_ui():
     stats_upgrade_container.get_node("AttackSpeed").set_amount(combat_stats.attack_speed)
     stats_upgrade_container.get_node("AttackRange").set_amount(combat_stats.attack_range)
     stats_upgrade_container.get_node("MaxHp").set_amount(combat_stats.max_health)
-    stats_upgrade_container.get_node("UpgradeCost").set_amount(combat_stats.get_level_up_price())
+    stats_upgrade_container.get_node("UpgradeCost").set_amount(int(combat_stats.get_level_up_price()))
     draw_radius.radius =  ATTACK_RANGE_MULTI * combat_stats.attack_range
 
 func _on_TowerCombatStats_health_changed():

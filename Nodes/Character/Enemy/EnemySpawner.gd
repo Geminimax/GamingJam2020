@@ -57,7 +57,7 @@ func spawn_wave(wave_time):
     if current_wave_configuration >= wave_configuration.size():
         completed = true
         return
-    if(current_wave_progress > wave_configuration[current_wave_configuration].wave_count):
+    if(current_wave_progress >= wave_configuration[current_wave_configuration].wave_count):
         current_wave_progress = 0
         current_wave_configuration += 1
         if current_wave_configuration >= wave_configuration.size():
@@ -74,7 +74,7 @@ func spawn_wave(wave_time):
                 for i in range(enemy_quantity):
                     if should_spawn:
                         spawn_enemy(current_enemy)
-                        yield(get_tree().create_timer(wave_time/total_enemy_count), "timeout")
+                        yield(get_tree().create_timer(wave_time/float(total_enemy_count)), "timeout")
     
     emit_signal("spawn_finished")
 func stop_all_enemies(kill: bool):

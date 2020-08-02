@@ -23,15 +23,15 @@ animations = [ {
 "name": "default",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ) ],
-"loop": false,
-"name": "attack",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 15 ) ],
 "loop": true,
 "name": "inactive",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "attack",
+"speed": 15.0
 } ]
 
 [sub_resource type="Gradient" id=2]
@@ -70,6 +70,9 @@ attack_range = 1.0
 attack_speed = 0.7
 attack_damage = 2.0
 max_targets = 100
+level_up_price_base = 5
+level_up_price_increment = 2.0
+level_up_price_multi = 0.15
 attack_range_increment = 0.1
 attack_speed_increment = 0.1
 knockback = false

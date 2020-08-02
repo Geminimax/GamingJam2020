@@ -85,15 +85,13 @@ func spawn_wave_enemyspawners():
     for i in spawners.size():
         var types = []
         var count = []
-        print("spawner wi - " + str(spawners[i].wave_interval))
-        wave_max_time = max(wave_max_time, spawners[i].wave_interval)
-        
+        spawners[i].spawn_wave(time)
         var wave = spawners[i].wave_configuration[spawners[i].current_wave_configuration]
         for enemy in wave.enemy_configuration:
             types.push_back(enemy.enemy_type)
-            count.push_back(enemy.enemy_count + (spawners[i].current_wave_progress) * enemy.enemy_count_progression)
+            count.push_back(enemy.enemy_count + (spawners[i].current_wave_progress -1) * enemy.enemy_count_progression)
         make_wave_panel(panels[i], types, count)
-        spawners[i].spawn_wave(time)
+       
     $WaveTimer.start(time)
     
               

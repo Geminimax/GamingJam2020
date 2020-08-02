@@ -53,7 +53,7 @@ func _process(delta):
                 $PickChar.play()
 
             elif Input.is_action_just_pressed("upgrade_tower"):
-                var cost = holdable_character_in_range.combat_stats.get_level_up_price()
+                var cost = int(holdable_character_in_range.combat_stats.get_level_up_price())
                 if cost <= currency_amount and holdable_character_in_range.combat_stats.level_up():
                     currency_amount -= cost
                     update_currency()

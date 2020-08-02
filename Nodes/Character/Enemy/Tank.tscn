@@ -11,17 +11,24 @@ animations = [ {
 "loop": true,
 "name": "default",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
 } ]
 
 [node name="Tank" instance=ExtResource( 1 )]
+drop_coin_amount = 3.0
 
 [node name="Sprite" type="AnimatedSprite" parent="." index="0"]
+z_index = 1
 frames = SubResource( 1 )
+animation = "attack"
 playing = true
 
 [node name="CombatStats" parent="." index="1"]
-max_health = 20
-health = 20
-speed = 20.0
-attack_range = 40.0
-attack_damage = 3.0
+max_health = 35
+health = 35
+speed = 35.0
+attack_damage = 5.0

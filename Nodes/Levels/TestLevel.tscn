@@ -10,7 +10,7 @@
 [ext_resource path="res://Nodes/Character/Enemy/Minion.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Nodes/Base.tscn" type="PackedScene" id=16]
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
 signal enemy_on_end
@@ -121,15 +121,15 @@ func get_total_waves():
     return count
 "
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=2]
 script = ExtResource( 9 )
 enemy_type = ExtResource( 15 )
 enemy_count = 3
 enemy_count_progression = 0
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=3]
 script = ExtResource( 7 )
-enemy_configuration = [ SubResource( 10 ) ]
+enemy_configuration = [ SubResource( 2 ) ]
 wave_count = 1
 
 [node name="TestLevel" instance=ExtResource( 1 )]
@@ -154,8 +154,8 @@ visible = false
 "spawners",
 ] instance=ExtResource( 5 )]
 position = Vector2( 85.1287, 30.9512 )
-script = SubResource( 9 )
-wave_configuration = [ SubResource( 11 ) ]
+script = SubResource( 1 )
+wave_configuration = [ SubResource( 3 ) ]
 
 [node name="EnemyObjective" parent="." index="15" instance=ExtResource( 16 )]
 position = Vector2( 588.789, 173.473 )
